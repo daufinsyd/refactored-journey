@@ -5,5 +5,4 @@ Vilmin Simon
 |                              README                                          |
 +------------------------------------------------------------------------------+
 
-(c'est juste pour faire un bout de commit, valider que je suis bien
-contributeur).
+A Symfony project created on December 15, 2016, 6:34 pm.
