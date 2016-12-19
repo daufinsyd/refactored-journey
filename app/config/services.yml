@@ -1,9 +1,7 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/service_container.html
-parameters:
-#    parameter_name: value
-
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+#    oc_platform.example:
+#        class: OC\PlatformBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    oc_platform.antispam:
+        class: OC\PlatformBundle\Antispam\OCAntispam
+        arguments: ["@mailer", %locale%, 50]
