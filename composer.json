@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "name": "sydney_manjaro/ocm",
+=======
+    "name": "sydney/webadmin_rccf",
+>>>>>>> 9055a20150a59480eea4f3324846236dc0860f05
     "license": "proprietary",
     "type": "project",
     "autoload": {
