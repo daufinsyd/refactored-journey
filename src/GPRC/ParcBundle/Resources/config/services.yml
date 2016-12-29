@@ -1,0 +1,4 @@
+services:
+#    gprc_parc.example:
+#        class: GPRC\ParcBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

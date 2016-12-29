@@ -1,7 +1,22 @@
-rc_cf_admin:
-    resource: "@RCCfAdminBundle/Resources/config/routing.yml"
-    prefix:   /admin
+gufrufr:
+    resource: "@GUFRUFRBundle/Resources/config/routing.yml"
+    prefix:   /
 
+gprc_parc:
+    resource: "@GPRCParcBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gusr_user:
+    resource: "@GUSRUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gprof_profile:
+    resource: "@GPROFProfileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+log_login:
+    resource: "@LOGLoginBundle/Resources/config/routing.yml"
+    prefix:   /
 
 oc_platform:
     resource: "@OCPlatformBundle/Resources/config/routing.yml"

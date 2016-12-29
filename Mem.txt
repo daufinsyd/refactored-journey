@@ -51,7 +51,20 @@ En résumé, création de bundle :
 	
 	enregistrer les routes en modifiant app/config/routing.yml
 	
-
+Création d'une page :
+1 - déf URL en changeant Resources/config/routing.yml /!\ 4 ESPACES - PAS DE TAB /!\
+nom_route:
+    path:    /url
+	defaults: {_controller: RCCFAdminBundle:Advert:index}
+	
+defaults : paramètres de la route
+  _controller : action que l'on veut éxecuter et controleur (advert) que l'on va appeler.
+    RCCFAdminBundle -> nom du bundle
+	Advert : nom du contrôleur à ouvrir
+	index : nom de la méthode à éxecuter dans le contrôleur.
+  
+ 
+	
 
 
 

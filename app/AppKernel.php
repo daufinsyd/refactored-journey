@@ -17,7 +17,11 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new OC\PlatformBundle\OCPlatformBundle(),
-            new RCCF\AdminBundle\RCCfAdminBundle(),
+            new LOG\LoginBundle\LOGLoginBundle(),
+            new GPROF\ProfileBundle\GPROFProfileBundle(),
+            new GUSR\UserBundle\GUSRUserBundle(),
+            new GPRC\ParcBundle\GPRCParcBundle(),
+            new GUFR\UFRBundle\GUFRUFRBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

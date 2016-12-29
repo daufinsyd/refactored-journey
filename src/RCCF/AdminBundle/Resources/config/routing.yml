@@ -1,3 +1,0 @@
-rc_cf_admin_homepage:
-    path:     /
-    defaults: { _controller: RCCfAdminBundle:Default:index }
