@@ -2,6 +2,7 @@
 variable
  -> {{ var }}    [ <--> <?php echo $var; ?> ]
  -> {{ array['key'] }} ou {{ array.key }}
+ -> {% set var = "v" %}
  
 filtre 
  -> ~ fonction
@@ -15,4 +16,15 @@ commentaire
 conditions
  -> {% if condition %} ... {% elseif condition %} ... {% else %} ... {% endif %}
  -> is defined, is divisibleby, is empty,
- -> {% if var is empty %} ... {% endif %} 
+ -> {% if var is empty %} ... {% endif %}
+
+boucles
+ -> {% for i in 0..50 %} ... {% endfor %}
+ -> {% for lettre in 'a' .. 'z' %} ... {% endfor %}
+ -> {% for joueur in club %} ... {% endfor %}
+ -> for conditionnels (for joueur in club if joueur is not empty)
+ 
+inclusion
+ -> {% include 'header.twig' %}
+ -> {% ... with {'var' : 'val'} only %} -> limite l'inclusion à var
+ -> inclusion conditionnelle {% include A ? 'a.twig' : 'b.twig' }
