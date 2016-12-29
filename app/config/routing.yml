@@ -1,6 +1,6 @@
 rc_cf_admin:
     resource: "@RCCfAdminBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /admin
 
 
 oc_platform:
