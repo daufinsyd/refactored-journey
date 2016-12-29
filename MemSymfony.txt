@@ -63,9 +63,14 @@ defaults : paramètres de la route
 	Advert : nom du contrôleur à ouvrir
 	index : nom de la méthode à éxecuter dans le contrôleur.
   
- 
-	
+on ajoute pas les nouvelles routes dans app/config/routing.yml puisque elles sont internes
+au bundle -> encapsulation.
 
+Il faut créer les contrôleurs , AdvertController.php dans l'exemple.
+pour chaque action définie dans defaults (cf routes) il faut une méthode actionAction(), 
+par ex indexAction(). 
+	
+Dans le contrôleur on met le minium de html tout ça, on se repose sur les templates Twig.
 
 
 

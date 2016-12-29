@@ -1,3 +1,10 @@
 log_login_homepage:
     path:     /
     defaults: { _controller: LOGLoginBundle:Default:index }
+
+# may be erased later, since one page may be useful
+# will probably redirected to default controller
+
+signin:
+    path:    /signin
+    defaults: { _controller: LOGLoginBundle:Signin:index }
