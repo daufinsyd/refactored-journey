@@ -1,0 +1,89 @@
+
+app : fichiers qui concernent l'entièreté du site (configuration)
+bin : executables
+src : code source
+tests : test de l'appli
+var : logs, cache, on y touche pas.
+vendor : libs externes
+web : images, css, js, controleur frontal app.php (le seul accessible aux visiteurs)
+
+En moyenne, on trifouille chez /app et /src
+
+
+controleur frontal : point d'entrée du programme. Par ici passent toutes les pages. Un 
+peu l'idée du index.php avec tous les ?var=id qui passent après. Sous symfony c'est app.php
+ou app_dev.php
+
+deux environnements :
+developpement : app_dev.php [http://localhost:8000/app_dev.php/...]
+prod : app.php [http://localhost:8000/app.php/...]
+
+si erreurs en mode prod, on peut aller checker chez var/logs/prod.log 
+
+Architecture MVC (Modèle / Vue / Contrôleur)
+Modèle : gère données et contenu. C'est lui qui réalise les appels à la bdd.
+permet au controleur de gérer les données sans savoir comment elles sont stockées
+Contrôleur : analyse et traite la requête de l'utilisateur. Chef d'orchestre
+vue : afficher les pages. Côté designer. La tronche qu'aura une page
+
+bundle : fonctionnalité.
+Ex -> bundle blog qui contient contrôleurs, vues, css, js tout ça d'un blog.
+Ex -> bundle user qui gère groupes, mdp, page d'admin des users, formulaire d'inscription, ...
+
+php bin/console generate:bundle
+Nom/NombBundle
+NomNombBundle
+
+ajouter une structure html 
+{# src/Nom/NombBundle/Resources/views/Default/index.html.twig #} <html><body> </body></html>
+pour le retour de la barre
+
+il faut ajouter une route :
+nom_nomb:
+	resource : "@RCCfAdminBundle/Resources/config/routing.yml" [chemin du routing du bundle]
+	prefix : "/prefixevoulu"
+	
+En résumé, création de bundle :
+	code source dans src/application/bundleBundle/ avec fichier applicationbundleBundlephp 
+	à la racine
+	
+	enregistrer le bundle dans le noyau app/AppKernel.php avec new application/bundle...
+	
+	enregistrer les routes en modifiant app/config/routing.yml
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
