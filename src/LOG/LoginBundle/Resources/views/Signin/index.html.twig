@@ -1,0 +1,23 @@
+{# src/LOG/LoginBundle/Resources/views/Signin/index.html.twig#}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Signin </title>
+
+    </head>
+
+    <body>
+        {% filter upper %}
+            Pouet <em> Honw </em>
+        {%  endfilter %}
+        <br />
+        {% filter upper|escape %}
+            Pouet <em> Honw </em> <br />
+        {%  endfilter %}
+
+            Pouet
+
+    </body>
+
+</html>

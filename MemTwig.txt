@@ -1,0 +1,18 @@
+------------------------------ Twig --------------------------------------------
+variable
+ -> {{ var }}    [ <--> <?php echo $var; ?> ]
+ -> {{ array['key'] }} ou {{ array.key }}
+ 
+filtre 
+ -> ~ fonction
+ -> variable|filter pour appliquer un filtre a une variable
+ -> ex : lower, upper, title, length, escape/e ...
+ -> filtrage en bloc {% filter filtre %} ... {% endfilter %}
+ 
+commentaire 
+ -> {# ... #}
+ 
+conditions
+ -> {% if condition %} ... {% elseif condition %} ... {% else %} ... {% endif %}
+ -> is defined, is divisibleby, is empty,
+ -> {% if var is empty %} ... {% endif %} 

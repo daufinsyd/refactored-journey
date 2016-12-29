@@ -22,8 +22,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SigninController extends Controller {
 
+
     public function indexAction(){
-        return new Response("Notre page en construction");
+        return $this->render('LOGLoginBundle:Signin:index.html.twig');
     }
 
 }
