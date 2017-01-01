@@ -3,11 +3,45 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        {% block meta_info %} {# specific meta tags #}
+            <title> Index </title>
+        {% endblock %}
 
+        {% block Global_CSS %} {# bootstrap and general CSS files/stylesheets #}
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/layout-stylesheet.css') }}" />
+        {% endblock %}
+
+        {# place for specific stylesheets file #}
     </head>
 
-    <body>
 
+    <body>
+        <nav class="navbar navbar-rccf">
+            <a class="navbar-brand" href="#">
+                {# <img class="rccf-logo" src="{{ asset('RCCF-1.png') }}" /> #}
+                RCCF
+            </a>
+            {% block pages %} {# will handle all gesture pages, with a <ul> for instance #}
+            {% endblock %}
+
+
+        </nav>
+
+        {% block content %} {# body content#}
+            <p>
+                J'étais resté confus, au son de ces paroles, <br />
+                comme reste celui qui, ne pouvant comprendre <br />
+                ce qu'on prétend de lui, ne sait comment répondre. <br />
+            </p>
+
+            <p>
+                Combien sont-ils, là-haut, comme des princes <br />
+                nui deviendront un jour des porcs dans le bourbier <br />
+                laissant derrière eux un horrible mépris<br />
+            </p>
+        {% endblock %}
 
     </body>
 </html>
