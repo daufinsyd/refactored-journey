@@ -3,12 +3,35 @@ variable
  -> {{ var }}    [ <--> <?php echo $var; ?> ]
  -> {{ array['key'] }} ou {{ array.key }}
  -> {% set var = "v" %}
+ -> variable globale app avec les champs app.request, app.session, app.environnement,
+    app.debug, app.user.
+ -> déf de variagle globale dans app/config/config.yml
+	twig:
+		globals:
+			var1: %glo_value%
+			# ...
+	
+	et app/config/parameters.yml
+	twig:
+		globals:
+			glo_value: 125
+			
+		
+environnements
+ -> {{ }} affiche qqchose
+ -> {% %} fait qqchose
+ -> {# #} commentaires
+
  
 filtre 
  -> ~ fonction
  -> variable|filter pour appliquer un filtre a une variable
  -> ex : lower, upper, title, length, escape/e ...
  -> filtrage en bloc {% filter filtre %} ... {% endfilter %}
+ -> {{ date|date('d/m/y') }}, date est une instance de DateTime.
+ -> {{ texte|length }} donne la longueur
+ 
+  http://twig.sensiolabs.org/doc/filters/index.html
  
 commentaire 
  -> {# ... #}
@@ -28,4 +51,56 @@ inclusion
  -> {% include 'header.twig' %}
  -> {% ... with {'var' : 'val'} only %} -> limite l'inclusion à var
  -> inclusion conditionnelle {% include A ? 'a.twig' : 'b.twig' }
+ -> {% include(...) %}
+ -> inclusion de contrôleur {{ render(controller("..")) }}
+ 
+ 
+
+notion d'héritage 
+ -> template pere (souvent layout.twig.html) que l'on met a la racine des views
+ -> définitions des "zones à combler" par les fils dans les balises 
+    {% block nom %} valeur par def {% endblock %}
+ -> dans un fils {% extends "NomBundle::layout.html.twig" }}
+ -> et on redefinit les {% block nom %} remplissage {% endblock %}
+ -> modèle triple héritage 
+		-- layout général (au dessus des bundle) dans /app/Resources/views/layout.html.twig
+		   on l'appelle avec ::layout.html.twig
+		-- layout du bundle
+		-- template de page
+ -> inclusion != héritage
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  

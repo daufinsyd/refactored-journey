@@ -15,7 +15,7 @@ peu l'idée du index.php avec tous les ?var=id qui passent après. Sous symfony 
 ou app_dev.php
 
 deux environnements :
-developpement : app_dev.php [http://localhost:8000/app_dev.php/...]
+developpement : app_dev.php [http://localhost:8000/app_dev.php/...] - http://localhost:8000/app_dev.php/Signin/signin
 prod : app.php [http://localhost:8000/app.php/...]
 
 si erreurs en mode prod, on peut aller checker chez var/logs/prod.log 
@@ -132,6 +132,76 @@ _controller -> le contrôleur à appeler
 possibilité d'ajouter des préfixes, avec le param prefix dans app/config/routung.yml
 
 
+pour récupérer une requête dans un contrôleur (pour gérer les arguments du type ?tag=24 dans 
+les url)
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class LeControleur extends Controller {
+	public function viewAction($p1, Request $p2){ //p2 est la requete site/page?tag=5
+		$tag = $request->query->get('tag');
+		// ...
+	
+	}
+}
+
+tableau des variables :
+type de param              méthode symfony         méthode php           exemple
+
+Variables d'URL            $request->query         $_GET                 $request->query->get('tag')
+Variables de formulaire    $request->request       $_POST                $request->request->get('tag')
+Variables de cookie        $request->cookies       $_COOKIE              $request->cookies->get('tag')
+Variables de serveur       $request->server        $_SERVER              $request->server->get('REQUEST_URI')
+Variables d'entête         $request->headers       $_SERVER['HTTP_*']    $request->headers->get('USER_AGENT')
+Paramètres de route        $request->attributes    n/a                   $request->attributes->get('id')
+
+Rmq : si le paramètre n'existe pas, on retourne une chaine vide et non une erreur (donc pas
+besoin de tester l'existence).
+
+si un formulaire est envoyé -> méthode POST |
+                                            | } isMethod()
+si sur un clic              -> méthode GET  |
+
+requête AJAX ? isXmlHttpRequest() -> pratique pour renvoyer du JSON
+http://api.symfony.com/3.0/Symfony/Component/HttpFoundation/Request.html
+
+possibilité de construire une réponse complète avec les méthodes de l'objet Response
+setContent(), setStatusCode().
+
+la méthode render() permet d'éviter de se payer l'enchaînement des méthodes.
+
+Une redirection est une requête HTTP avec unp paramètre Location. On peut utiliser l'objet
+Redirect Response 
+
+class AdvertController extends Controller {
+  public function viewAction($id) {
+    $url = $this->get('router')->generate('oc_platform_home'); // definit l'url de redirection
+    return new RedirectResponse($url); // redirection
+	// ou return $this->redirect($url);
+	
+	
+	// ou le tout en une seule ligne
+	// return $this->redirectToRoute('oc_platform_home');
+  }
+}
+
+petit point config : en mettant intercept_redirects = true dans app/config/config_dev.yml
+on peut avoir un visuel symfony sur les pages excecutées tout ça, au lieu d'être redirigé
+salement.
+
+Le contenu d'une réponse dépend du paramètre Content-type dans le header de celle-ci. 
+on peut par exemple renvoyer du JSON avec un objet JsonResponse par exemple.
+
+On peut gérer les sessions avec [objet request] $request->getSession
+message flash -> variable de session qui ne vit que sur une seule page.
+
+$this->addFlash(
+            'notice',
+            'success!'
+        );
+
+		
 
 
 

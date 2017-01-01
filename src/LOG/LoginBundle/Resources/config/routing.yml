@@ -1,3 +1,5 @@
 signin:
     path:    /signin
-    defaults: { _controller: LOGLoginBundle:Signin:index }
+    defaults:
+         _controller: LOGLoginBundle:Signin:index
+

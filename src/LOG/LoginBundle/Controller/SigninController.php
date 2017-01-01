@@ -23,9 +23,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class SigninController extends Controller {
 
 
-    public function indexAction(){
-        //return $this->render('LOGLoginBundle:Signin:index.html.twig');
-        return new response("Hello world !");
+    public function indexAction(Request $request){
+        return $this->render('LOGLoginBundle:Signin:index.html.twig', array(
+            'var' => 252
+        ));
+        //return new response("Hello world !");
+
     }
 
 }
