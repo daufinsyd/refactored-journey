@@ -24,7 +24,8 @@ class SigninController extends Controller {
 
 
     public function indexAction(){
-        return $this->render('LOGLoginBundle:Signin:index.html.twig');
+        //return $this->render('LOGLoginBundle:Signin:index.html.twig');
+        return new response("Hello world !");
     }
 
 }

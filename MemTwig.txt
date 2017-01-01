@@ -28,3 +28,4 @@ inclusion
  -> {% include 'header.twig' %}
  -> {% ... with {'var' : 'val'} only %} -> limite l'inclusion à var
  -> inclusion conditionnelle {% include A ? 'a.twig' : 'b.twig' }
+ 

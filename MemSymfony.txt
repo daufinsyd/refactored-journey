@@ -72,10 +72,64 @@ par ex indexAction().
 	
 Dans le contrôleur on met le minium de html tout ça, on se repose sur les templates Twig.
 
+vider le cache du mode prod 
+	1 - php bin/console cache:clear --env=prod
+	2 - OU manuellement vider var/cache/{dev, prod}
 
+	
+Explication sur le routing en Symfony
+on touche au fichier nomBundle/Resources/config/routing.yml
 
+path : entrée - url à capturer
+defaults : paramètres de la route, quel contrôleur appeler.
 
+possibilité de mettre des jockers /url/{id} catchera les url du type /url/5
+en plaçant 5 pour la variable id.
 
+# src/OC/PlatformBundle/Resources/config/routing.yml
+
+oc_platform_home:
+    path:      /platform
+    defaults: { _controller: OCPlatformBundle:Advert:index }
+    
+oc_platform_view:
+    path:      /platform/advert/{id}
+    defaults: { _controller: OCPlatformBundle:Advert:view }
+    
+oc_platform_add:
+    path:      /platform/add
+    defaults: { _controller: OCPlatformBundle:Advert:add }
+
+oc_platform_... -> nom de la route
+path : /... -> URL sur laquelle la route s'applique
+defaults : paramètre de sortie de la route.
+
+dans les lignes _controller : 
+OCPlatformBundle -> nom du Bundle
+Advert -> nom du controleur (cf AdvertController.php)
+view -> nom de l'action à exécuter (cf viewAction())
+
+si {id} est mentionné dans le path, il est alors obligatoire par défaut
+pour que l'URL matche
+
+# src/OC/PlatformBundle/Resources/config/routing.yml
+
+oc_platform_view_slug:
+    path:      /platform/{year}/{slug}.{format}
+    defaults:
+        _controller: OCPlatformBundle:Advert:viewSlug
+		format:      html # donne une valeur par défaut à format 
+    requirements:
+        year:   \d{4}  # 4 chiffres
+        format: html|xml  # l'un ou exclusif l'autre
+		
+paramètres système : (appellent directement le Kernel de Symfony)
+_format -> ajoute un paramètre Content-type à la réponse
+_locale -> langue, pas oublier les requirements (si le gars demande russe alors
+           qu'il y a que anglais et français à proposer ...)
+_controller -> le contrôleur à appeler
+
+possibilité d'ajouter des préfixes, avec le param prefix dans app/config/routung.yml
 
 
 
