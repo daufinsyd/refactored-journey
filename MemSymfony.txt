@@ -216,8 +216,22 @@ Un objet = objet PHP (donc classe !) remplissant une fonction, associé à une c
 est accessible depuis n'importe où dans le code. La configuration c'est l'enregistrer
 dans le conteneur de service, en lui donnant un nom, sa classe, tout ça.
 
+Entités ------------------------------------------------------------------------
+
+ORM -> object relation mapper. ORM manipule des entités (objets). Pour indiquer à la BD
+quels types de données doivent être donnés tout ça, on utilise les commentaires /* @ */,
+ce sont des annotations.
+
+to be continued
 
 
+
+Sécurité et Users ---------------------------------------------------------------
+ressources : http://symfony.com/doc/current/security.html
+
+1 - Authentification => security.yml
+2 - Authorization => interdire l'accès
+3 - utiliser l'objet user.
 
 
 

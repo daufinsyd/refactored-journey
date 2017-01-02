@@ -4,7 +4,7 @@ rasp_rasp:
 
 log_login:
     resource: "@LOGLoginBundle/Resources/config/routing.yml"
-    prefix:   /Signin
+    prefix:   /Gestion
 
 oc_platform:
     resource: "@OCPlatformBundle/Resources/config/routing.yml"
