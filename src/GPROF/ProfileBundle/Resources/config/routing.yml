@@ -1,3 +1,0 @@
-gprof_profile_homepage:
-    path:     /
-    defaults: { _controller: GPROFProfileBundle:Default:index }

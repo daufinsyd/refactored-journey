@@ -51,6 +51,13 @@ En résumé, création de bundle :
 	
 	enregistrer les routes en modifiant app/config/routing.yml
 	
+suppression de bundle :
+	1 - l'enlever de AppKernel.php
+	2 - l'enlever du app/routing.yml et du app/config.yml
+	3 - virer le dossier du bundle
+	4 - virer les assets du bundle (dans web/...)
+	5 - éliminer les dépendances inter bundle.
+	
 Création d'une page :
 1 - déf URL en changeant Resources/config/routing.yml /!\ 4 ESPACES - PAS DE TAB /!\
 nom_route:
@@ -201,7 +208,14 @@ $this->addFlash(
             'success!'
         );
 
-		
+Composer : est au PHP ce qu'APT est à nunux.
+
+Notions de service -------------------------------------------------------------
+
+Un objet = objet PHP (donc classe !) remplissant une fonction, associé à une config. 
+est accessible depuis n'importe où dans le code. La configuration c'est l'enregistrer
+dans le conteneur de service, en lui donnant un nom, sa classe, tout ça.
+
 
 
 

@@ -1,3 +1,0 @@
-gusr_user_homepage:
-    path:     /
-    defaults: { _controller: GUSRUserBundle:Default:index }

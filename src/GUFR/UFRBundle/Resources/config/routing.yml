@@ -1,3 +1,0 @@
-gufrufr_homepage:
-    path:     /
-    defaults: { _controller: GUFRUFRBundle:Default:index }

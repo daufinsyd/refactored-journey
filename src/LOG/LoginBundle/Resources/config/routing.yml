@@ -1,5 +1,5 @@
 signin:
-    path:    /signin
+    path:    /
     defaults:
          _controller: LOGLoginBundle:Signin:index
 

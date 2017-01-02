@@ -1,18 +1,6 @@
-gufrufr:
-    resource: "@GUFRUFRBundle/Resources/config/routing.yml"
-    prefix:   /GestionUFR
-
-gprc_parc:
-    resource: "@GPRCParcBundle/Resources/config/routing.yml"
-    prefix:   /GestionParc
-
-gusr_user:
-    resource: "@GUSRUserBundle/Resources/config/routing.yml"
-    prefix:   /GestionUser
-
-gprof_profile:
-    resource: "@GPROFProfileBundle/Resources/config/routing.yml"
-    prefix:   /GestionProfil
+rasp_rasp:
+    resource: "@RASPRaspBundle/Resources/config/routing.yml"
+    prefix:   /
 
 log_login:
     resource: "@LOGLoginBundle/Resources/config/routing.yml"

@@ -1,0 +1,3 @@
+rasp_rasp_homepage:
+    path:     /
+    defaults: { _controller: RASPRaspBundle:Default:index }

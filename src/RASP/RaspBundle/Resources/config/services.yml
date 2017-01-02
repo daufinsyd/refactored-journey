@@ -1,0 +1,4 @@
+services:
+#    rasp_rasp.example:
+#        class: RASP\RaspBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
