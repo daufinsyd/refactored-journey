@@ -6,11 +6,29 @@
     <title> Signin </title>
 {% endblock %}
 
+{% block pages %}
+<ul class="nav navbar-nav">
+    {% set p_arr = ['Profile', 'Utilisateurs', 'Groupes', 'Parc'] %}
+    {% for item in p_arr %}
+        <li class=""nav-item active">
+            <a class="nav-link navbar-brand" href="#"> {{ item }} </a>
+        </li>
+    {% endfor %}
+
+</ul>
+<ul class="nav navbar-nav navbar-right">
+    <li class="nav-item">Outil de Gestion</li>
+</ul>
+
+{% endblock %}
+
+
+
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                one of three columns
+                One of three columns
             </div>
             <div class="col-sm-4">
                 One of three columns
