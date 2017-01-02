@@ -24,4 +24,12 @@ class GestionController extends Controller {
         return new Response("hello world !");
     }
 
+    public function usersAction(){
+        return $this->render('LOGLoginBundle:GestionViews:users.html.twig');
+    }
+
+    public function groupAction(){
+        return $this->render('LOGLoginBundle:GestionViews:group.html.twig');
+    }
+
 }

@@ -8,10 +8,10 @@
 
 {% block pages %}
 <ul class="nav navbar-nav">
-    {% set p_arr = ['Profile', 'Utilisateurs', 'Groupes', 'Parc'] %}
-    {% for item in p_arr %}
+    {% set p_arr = {profile: 'Profile', users: 'Utilisateurs', group: 'Groupes'} %}
+    {% for key, item in p_arr %}
         <li class=""nav-item active">
-            <a class="nav-link navbar-brand" href="#"> {{ item }} </a>
+            <a class="nav-link navbar-brand" href="{{ path(key) }}"> {{ item }} </a>
         </li>
     {% endfor %}
 
