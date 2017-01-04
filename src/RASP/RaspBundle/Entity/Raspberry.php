@@ -57,4 +57,126 @@ class Raspberry
      * @ORM\ManyToOne(targetEntity="RASP\RaspBundle\Entity\Ufr")
      */
     protected $ufr;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxVol()
+    {
+        return $this->maxVol;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScheduleFile()
+    {
+        return $this->scheduleFile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShortLog()
+    {
+        return $this->shortLog;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUfr()
+    {
+        return $this->ufr;
+    }
+
+
+    /**
+     * @param mixed $info
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+    }
+
+    /**
+     * @param mixed $maxVol
+     */
+    public function setMaxVol($maxVol)
+    {
+        $this->maxVol = $maxVol;
+    }
+
+    /**
+     * @param mixed $place
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    }
+
+    /**
+     * @param mixed $scheduleFile
+     */
+    public function setScheduleFile($scheduleFile)
+    {
+        $this->scheduleFile = $scheduleFile;
+    }
+
+    /**
+     * @param mixed $shortLog
+     */
+    public function setShortLog($shortLog)
+    {
+        $this->shortLog = $shortLog;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @param mixed $ufr
+     */
+    public function setUfr($ufr)
+    {
+        $this->ufr = $ufr;
+    }
+
 }
