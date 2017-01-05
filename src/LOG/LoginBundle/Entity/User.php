@@ -25,17 +25,18 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(name="status", type="smallint", nullable=true)
      */
     protected $status;
 
     /**
-     * @ORM\Column(name="rank", type="smallint")
+     * @ORM\Column(name="rank", type="smallint", nullable=true)
      */
     protected $rank;
 
     /**
      * @ORM\ManyToOne(targetEntity="RASP\RaspBundle\Entity\Ufr")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $ufr;
 
