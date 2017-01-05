@@ -8,13 +8,14 @@
 
 namespace LOG\LoginBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Table(name="log_user")
  * @ORM\Entity(repositoryClass="LOG\LoginBundle\Entity\UserRepository")
  */
 
-class Login
+class Login extends BaseUser
 {
     /**
      * @ORM\Column(name="id", type="integer")
