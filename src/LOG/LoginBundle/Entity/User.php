@@ -8,13 +8,14 @@
 
 namespace LOG\LoginBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Table(name="log_user")
- * @ORM\Entity(repositoryClass="LOG\LoginBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="LOG\LoginBundle\Repository\UserRepository")
  */
 
-class Login
+class User extends BaseUser
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -24,29 +25,18 @@ class Login
     protected $id;
 
     /**
-     * @ORM\Column(name="email", type"string", length=255)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $email;
-
-    /**
-     * @ORM\Column(name="passwd", type="string", length=255)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $passwd;
-
-    /**
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(name="status", type="smallint", nullable=true)
      */
     protected $status;
 
     /**
-     * @ORM\Column(name="rank", type="smallint")
+     * @ORM\Column(name="rank", type="smallint", nullable=true)
      */
     protected $rank;
 
     /**
      * @ORM\ManyToOne(targetEntity="RASP\RaspBundle\Entity\Ufr")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $ufr;
 
@@ -65,22 +55,6 @@ class Login
     public function getUfr()
     {
         return $this->ufr;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPasswd()
-    {
-        return $this->passwd;
     }
 
     /**
