@@ -14,7 +14,7 @@ security:
             memory: ~
 
         fos_userbundle:
-                    id: log_user.user_provider.username
+                    id: fos_user.user_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -34,8 +34,8 @@ security:
 
             # Ensure that user has to be connected
             form_login:
-                rovider: fos_userbundle
-                srf_token_generator: security.csrf.token_manager
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
 
             logout:       true
             anonymous:    true
