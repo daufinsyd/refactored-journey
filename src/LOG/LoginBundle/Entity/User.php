@@ -15,7 +15,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Entity(repositoryClass="LOG\LoginBundle\Entity\UserRepository")
  */
 
-class Login extends BaseUser
+class User extends BaseUser
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -25,7 +25,7 @@ class Login extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="email", type"string", length=255)
+     * @ORM\Column(name="email", type="string", length=255)
      * @ORM\JoinColumn(nullable=false)
      */
     protected $email;
