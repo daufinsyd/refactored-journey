@@ -25,18 +25,6 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="email", type="string", length=255)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $email;
-
-    /**
-     * @ORM\Column(name="passwd", type="string", length=255)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $passwd;
-
-    /**
      * @ORM\Column(name="status", type="integer")
      */
     protected $status;
@@ -66,22 +54,6 @@ class User extends BaseUser
     public function getUfr()
     {
         return $this->ufr;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPasswd()
-    {
-        return $this->passwd;
     }
 
     /**
