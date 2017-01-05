@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new OC\PlatformBundle\OCPlatformBundle(),
             new LOG\LoginBundle\LOGLoginBundle(),
             new RASP\RaspBundle\RASPRaspBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
