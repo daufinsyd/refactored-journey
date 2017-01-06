@@ -6,13 +6,13 @@
  * Time: 22:35
  */
 
-namespace LOG\LoginBundle\Entity;
+namespace RASP\RaspBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Table(name="log_user")
- * @ORM\Entity(repositoryClass="LOG\LoginBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="RASP\RaspBundle\Repository\UserRepository")
  */
 
 class User extends BaseUser

@@ -25,11 +25,11 @@ class GestionController extends Controller {
     }
 
     public function usersAction(){
-        return $this->render('LOGLoginBundle:GestionViews:users.html.twig');
+        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig');
     }
 
     public function groupAction(){
-        return $this->render('LOGLoginBundle:GestionViews:group.html.twig');
+        return $this->render('RASPRaspBundle:User/Gestion:group.html.twig');
     }
 
 }

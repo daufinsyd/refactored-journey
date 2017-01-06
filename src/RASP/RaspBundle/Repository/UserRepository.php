@@ -6,8 +6,8 @@
  * Time: 16:49
  */
 
-// src/LOG/LoginBundle/Repository/UserRepository.php
-namespace LOG\LoginBundle\Repository;
+// src/RASP/RaspBundle/Repository/UserRepository.php
+namespace RASP\RaspBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

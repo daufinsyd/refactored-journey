@@ -5,9 +5,9 @@ rasp_rasp_homepage:
 users:
     path:    /users
     defaults:
-        _controller: LOGLoginBundle:Gestion:users
+        _controller: RASPRaspBundle:Gestion:users
 
 group:
     path:    /group
     defaults:
-        _controller: LOGLoginBundle:Gestion:group
+        _controller: RASPRaspBundle:Gestion:group
