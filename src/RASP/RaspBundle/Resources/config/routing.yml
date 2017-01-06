@@ -1,3 +1,13 @@
 rasp_rasp_homepage:
     path:     /
     defaults: { _controller: RASPRaspBundle:Default:index }
+
+users:
+    path:    /users
+    defaults:
+        _controller: RASPRaspBundle:Gestion:users
+
+group:
+    path:    /group
+    defaults:
+        _controller: RASPRaspBundle:Gestion:group

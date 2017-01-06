@@ -7,7 +7,7 @@
  * Path : RCCF/src/LOG/LoginBundle/Controller/GestionController.php
  */
 
-namespace LOG\LoginBundle\Controller;
+namespace RASP\RaspBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,11 +25,11 @@ class GestionController extends Controller {
     }
 
     public function usersAction(){
-        return $this->render('LOGLoginBundle:GestionViews:users.html.twig');
+        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig');
     }
 
     public function groupAction(){
-        return $this->render('LOGLoginBundle:GestionViews:group.html.twig');
+        return $this->render('RASPRaspBundle:User/Gestion:group.html.twig');
     }
 
 }

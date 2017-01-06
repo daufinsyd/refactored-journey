@@ -2,10 +2,6 @@ rasp_rasp:
     resource: "@RASPRaspBundle/Resources/config/routing.yml"
     prefix:   /
 
-log_login:
-    resource: "@LOGLoginBundle/Resources/config/routing.yml"
-    prefix:   /Gestion
-
 oc_platform:
     resource: "@OCPlatformBundle/Resources/config/routing.yml"
     prefix:   /platform
