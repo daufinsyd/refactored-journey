@@ -1,0 +1,18 @@
+{% block title %}Page de login RCCF{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/layout-stylesheet.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/signin.css') }}" />
+
+    <nav class="navbar navbar-rccf">
+        <a class="navbar-brand" href="#">
+            {# <img class="rccf-logo" src="{{ asset('RCCF-1.png') }}" /> #}
+            RCCF
+        </a>
+
+    </nav>
+    <div class="container">
+        {% block fos_user_content %}{% endblock %}
+    </div>
+{% endblock %}
