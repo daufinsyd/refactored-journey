@@ -54,6 +54,7 @@ class Ufr
     }
 
     public function __toString() {
+        // allow standard use
         return $this->name;
     }
 }

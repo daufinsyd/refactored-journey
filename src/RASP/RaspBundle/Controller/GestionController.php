@@ -46,7 +46,7 @@ class GestionController extends Controller {
 
         $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr));
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {

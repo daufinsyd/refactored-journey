@@ -20,12 +20,14 @@ use Symfony\Component\Form\FormEvents;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
+        $listUfr = $options['listUfr'];
         $builder
             ->add('username')
             ->add('email')
@@ -42,10 +44,17 @@ class UserType extends AbstractType
             //->add('ufr', UfrType::class, array('by_reference' => true))
             ->add('ufr', null, array(
                     'class' => 'RASP\RaspBundle\Entity\Ufr',
-                    'choices' => array("e" => 1)
+                    'choices' => $listUfr
             ))
             ->add('save', SubmitType::class)
         ;
 
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'listUfr' => null,
+        ));
     }
 }
