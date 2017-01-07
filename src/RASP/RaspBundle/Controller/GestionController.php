@@ -8,6 +8,7 @@
  */
 
 namespace RASP\RaspBundle\Controller;
+use RASP\RaspBundle\Form\User\UserPasswdType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,8 +20,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 // for types
 use RASP\RaspBundle\Form\User\UserType;
+use RASP\RaspBundle\Form\User\UserPasswordType;
 // for user repo
 use RASP\RaspBundle\Repository\UserRepository;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class GestionController extends Controller {
     // Actions for RCCF admin
@@ -40,6 +43,24 @@ class GestionController extends Controller {
         // Show specific user
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
         return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user));
+    }
+
+    public function userPasswordAction($user_id, Request $request)
+    {
+        $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+
+        $form = $this->createForm(UserPasswdType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            /*$user = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            */
+            return $this->redirectToRoute("admin_showUser", array('user_id' => $user_id));
+        }
+        return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user));
     }
 
     public function editUserAction($user_id, Request $request)

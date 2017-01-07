@@ -7,6 +7,12 @@ admin_users:
     defaults:
         _controller: RASPRaspBundle:Gestion:users
 
+user_editPassord:
+    path:    /userPassword/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:userPassword
+    requirements:
+        user: \d+
 
 admin_showUser:
     path:    /admin_/user/{user_id}
