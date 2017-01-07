@@ -1,0 +1,47 @@
+{% extends 'RASPRaspBundle:User:layout.html.twig' %}
+{% block meta_info %}
+<title>Profile utilisateur - Édition</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {#
+                <form class="form-signin">
+                    Modification de l'utilisateur d'ID: {{ user.id }}<br/>
+                    Utilisateur <input type="checkbox"
+                            {% if user.enabled %} checked="checked"
+                            {% endif %}
+                            >
+                    <br/>
+                    Nom: <input type="text" value="{{ user.username }}"><br/>
+                    Email: <input type="email" value="{{ user.email }}"><br/>
+                    Status: <select> {{ user.status }}</select><br/>
+                    Grade: <select> {{ user.rank }}</select><br/>
+                    Ufr: <select>
+                            {% for ufr in listUfr %}
+                            <option>{{ ufr.name }}</option>
+                            {% endfor %}
+                        </select><br/>
+
+                        <button>Annuler</button>
+                        <button>Valider</button>
+                </form>
+                #}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+            <div class="col-sm-4">
+                One of three columns
+            </div>
+            <div class="col-sm-4">
+                One of three columns
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

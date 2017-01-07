@@ -2,10 +2,39 @@ rasp_rasp_homepage:
     path:     /
     defaults: { _controller: RASPRaspBundle:Default:index }
 
-users:
-    path:    /users
+admin_users:
+    path:    /admin_/users
     defaults:
         _controller: RASPRaspBundle:Gestion:users
+
+
+admin_showUser:
+    path:    /admin_/user/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:user
+    requirements:
+        user: \d+
+
+admin_editUser:
+    path:    /admin_/editUser/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:editUser
+    requirements:
+        user: \d+
+
+admin_userSuccess:
+    path:    /admin_/userSuccess/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:userSuccess
+    requirements:
+        user: \d+
+
+admin_createUser:
+    path:    /admin_/createUser
+    defaults:
+        _controller: RASPRaspBundle:Gestion:createUser
+    requirements:
+        user: \d+
 
 group:
     path:    /group

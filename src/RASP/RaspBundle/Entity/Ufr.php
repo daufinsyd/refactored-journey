@@ -52,4 +52,9 @@ class Ufr
     {
         $this->name = $name;
     }
+
+    public function __toString() {
+        // allow standard use
+        return $this->name;
+    }
 }
