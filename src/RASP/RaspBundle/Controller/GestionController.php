@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 // for types
 use RASP\RaspBundle\Form\User\UserType;
+// for user repo
+use RASP\RaspBundle\Repository\UserRepository;
 
 class GestionController extends Controller {
     // Actions for RCCF admin
@@ -29,7 +31,8 @@ class GestionController extends Controller {
 
     public function usersAction(){
         // List users
-        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig');
+        $listUser = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->findAll();
+        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser));
     }
 
     public function userAction($user_id)

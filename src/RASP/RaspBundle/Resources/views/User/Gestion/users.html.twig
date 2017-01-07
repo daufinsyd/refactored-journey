@@ -1,1 +1,40 @@
-{% extends 'LOGLoginBundle::layout.html.twig' %}
+{% extends 'RASPRaspBundle:User:layout.html.twig' %}
+
+{% block meta_info %}
+    <title>Liste des utilisateurs</title>
+{% endblock %}
+
+
+
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}" />
+<div class="container">
+    <table>
+        <tr>
+            <th>Actif ?</th>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>UFR</th>
+            <th>Statut</th>
+            <th>Grade</th>
+        </tr>
+    {% for user in listUser %}
+        <tr>
+            <th>
+                {% if user.enabled %}
+                    <span class="actif">Oui</span>
+                {% else %}
+                    <span class="inactif">Non</span>
+                {% endif %}
+            </th>
+            <th>{{ user.id }}</th>
+            <th><a href="{{ path("admin_showUser", {'user_id' : user.id}) }}">{{ user.username }}</a></th>
+            <th>{{ user.ufr }}</th>
+            <th>{{ user.status }}</th>
+            <th>{{ user.rank }}</th>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}
