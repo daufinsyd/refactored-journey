@@ -20,9 +20,9 @@
                 Email: {{ user.email }}<br/>
                 Status: {{ user.status }}<br/>
                 Grade: {{ user.rank }}<br/>
-                Ufr: {{ user.ufr }}<br/>
+                {#Ufr: {{ user.ufr }}<br/>#}
 
-                <form method="get" action="{{ path('admin_editUser', {'user': user.id} ) }}">
+                <form method="get" action="{{ path('admin_editUser', {'user_id': user.id} ) }}">
                     <button>Éditer</button>
                 </form>
 

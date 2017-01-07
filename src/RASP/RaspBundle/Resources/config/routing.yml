@@ -9,19 +9,25 @@ admin_users:
 
 
 admin_showUser:
-    path:    /admin_/user/{user}
+    path:    /admin_/user/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:user
     requirements:
         user: \d+
 
 admin_editUser:
-    path:    /admin_/editUser/{user}
+    path:    /admin_/editUser/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:editUser
     requirements:
         user: \d+
 
+admin_userSuccess:
+    path:    /admin_/userSuccess/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:userSuccess
+    requirements:
+        user: \d+
 
 admin_createUser:
     path:    /admin_/createUser
