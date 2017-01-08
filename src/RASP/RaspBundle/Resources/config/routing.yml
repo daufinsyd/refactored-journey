@@ -40,6 +40,13 @@ admin_createUser:
     defaults:
         _controller: RASPRaspBundle:Gestion:createUser
 
+admin_toggleUser:
+    path:   /admin_/toggleUser/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:toggleUser
+    requirements:
+        user_id: \d+
+
 admin_createUfr:
     path:   /admin_/createUfr
     defaults:

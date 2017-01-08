@@ -117,6 +117,22 @@ class GestionController extends Controller {
         return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user));
     }
 
+    public function toggleUserAction($user_id){
+        // TODO: implement ROLE
+        $user = $this->getDoctrine()->getRepository('RASPRaspBundle:User')->find($user_id);
+        $em = $this->getDoctrine()->getManager();
+        if ($user->isEnabled()) {
+            $user->setEnabled(false);
+        }
+        else {
+            $user->setEnabled(true);
+        }
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId()));
+    }
+
     public function groupAction(){
         return $this->render('RASPRaspBundle:User/Gestion:group.html.twig');
     }
