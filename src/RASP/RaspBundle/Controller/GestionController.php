@@ -37,19 +37,22 @@ class GestionController extends Controller {
 
     public function usersAction(){
         // List users
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $listUser = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->findAll();
-        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser));
+        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
     }
 
     public function userAction($user_id)
     {
         // Show specific user
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
-        return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user));
+        return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
     }
 
     public function userPasswordAction($user_id, Request $request)
     {
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
 
         $form = $this->createForm(UserPasswdType::class, $user);
@@ -62,14 +65,15 @@ class GestionController extends Controller {
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute("admin_showUser", array('user_id' => $user_id));
+            return $this->redirectToRoute("admin_showUser", array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
         }
-        return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user));
+        return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user, 'loggedInUser' => $loggedInUser));
     }
 
     public function editUserAction($user_id, Request $request)
     {
         // Show specific user
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
 
         $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
@@ -85,14 +89,15 @@ class GestionController extends Controller {
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('admin_showUser', array('user_id' => $user_id));
+            return $this->redirectToRoute('admin_showUser', array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
         }
 
-        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView()));
+        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
     }
 
     public function createUserAction(Request $request)
     {
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         // Create a new user
         $user = new User();
         // Auto generate a new password (should be set when on userfirst cinnexion via email link)
@@ -106,19 +111,21 @@ class GestionController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId()));
+            return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
         }
         // Same template as editUser
-        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView()));
+        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
     }
 
     public function userSuccessAction($user_id) {
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
-        return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user));
+        return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
     }
 
     public function toggleUserAction($user_id){
         // TODO: implement ROLE
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository('RASPRaspBundle:User')->find($user_id);
         $em = $this->getDoctrine()->getManager();
         if ($user->isEnabled()) {
@@ -130,7 +137,7 @@ class GestionController extends Controller {
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId()));
+        return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
     }
 
     public function groupAction(){

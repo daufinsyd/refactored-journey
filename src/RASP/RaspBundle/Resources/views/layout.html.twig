@@ -1,5 +1,7 @@
 {# src/LOG/LoginBundle/Resources/views/layout.html.twig#}
-
+{#
+    !!! This file should only be extended by files having a 'user' var (user is logged) !!!
+#}
 {% extends "::layout.html.twig" %}
 
 {% block meta_info %}
@@ -10,11 +12,14 @@
 
 {% block pages %}
 <ul class="nav navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link navbar-brand" href="{{ path('admin_showUser', {'user_id' : loggedInUser.id}) }}">Mon profil</a>
+    </li>
     {#
     {% set p_arr = {profile: 'Profile', users: 'Utilisateurs', group: 'Groupes'} %}
     {% for key, item in p_arr %}
         <li class=""nav-item active">
-            <!<a class="nav-link navbar-brand" href="{{ path(key) }}"> {{ item }} </a>
+            <a class="nav-link navbar-brand" href="{{ path(key) }}"> {{ item }} </a>
         </li>
     {% endfor %}
     #}

@@ -12,6 +12,7 @@ class DefaultController extends Controller
     }
     public function adminIndexAction()
     {
-        return $this->render('RASPRaspBundle::admin.html.twig');
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+        return $this->render('RASPRaspBundle::admin.html.twig', array('loggedInUser' => $loggedInUser->getId()));
     }
 }
