@@ -1,0 +1,39 @@
+{% extends 'RASPRaspBundle::layout.html.twig' %}
+{% block meta_info %}
+    <title>Administration du parc</title>
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Gestion de la flotte de raspberry</h3>
+            </div>
+            <div class="col-sm-4">
+                <h3>Gestion des utilisateurs</h3>
+                <form method="get" action="{{ path('admin_users') }}">
+                    <button class="btn btn-info">Voir les utilisateurs</button>
+                </form>
+                <br/>
+                <form method="get" action="{{ path('admin_createUser') }}">
+                    <button class="btn btn-success">Créer un utilisateur</button>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <h3>Gestion des Ufr</h3>
+                <form method="get" action="{{ path('admin_listUfrs') }}">
+                    <button class="btn btn-info">Voir les UFR</button>
+                </form>
+                <br/>
+                <form method="get" action="{{ path('admin_createUfr') }}">
+                    <button class="btn btn-success">Créer une UFR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

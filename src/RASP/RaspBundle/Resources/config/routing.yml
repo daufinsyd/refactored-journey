@@ -2,6 +2,11 @@ rasp_rasp_homepage:
     path:     /
     defaults: { _controller: RASPRaspBundle:Default:index }
 
+admin_homepage:
+    path:   /admin_/
+    defaults:
+        _controller: RASPRaspBundle:Default:adminIndex
+
 admin_users:
     path:    /admin_/users
     defaults:

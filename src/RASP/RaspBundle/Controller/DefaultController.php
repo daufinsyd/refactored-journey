@@ -10,4 +10,8 @@ class DefaultController extends Controller
     {
         return $this->render('RASPRaspBundle:Default:index.html.twig');
     }
+    public function adminIndexAction()
+    {
+        return $this->render('RASPRaspBundle::admin.html.twig');
+    }
 }
