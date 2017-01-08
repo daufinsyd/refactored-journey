@@ -53,11 +53,12 @@ class GestionController extends Controller {
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            /*$user = $form->getData();
+            //$user = $form->getData();
+            $user->setPlainPassword($form->get('password')->getData());
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            */
+
             return $this->redirectToRoute("admin_showUser", array('user_id' => $user_id));
         }
         return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user));
