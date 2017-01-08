@@ -5,13 +5,25 @@
 
 
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}" />
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 ID: {{ ufr.id }}<br/>
                 Nom: {{ ufr.name }}<br/>
                 <!-- TODO: add list of users -->
-
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                    </tr>
+                {% for user in listUsers %}
+                    <tr>
+                        <th>{{ user.id }}</th>
+                        <th><a href="{{ path("admin_showUser", {'user_id' : user.id}) }}">{{ user.username }}</a></th>
+                    </tr>
+                {% endfor %}
+                </table>
                 <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
                     <button>Éditer</button>
                 </form>
