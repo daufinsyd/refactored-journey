@@ -8,6 +8,7 @@
  */
 
 namespace RASP\RaspBundle\Controller;
+use Doctrine\ORM\Mapping\Id;
 use RASP\RaspBundle\Form\User\UserPasswdType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 // for types
 use RASP\RaspBundle\Form\User\UserType;
 use RASP\RaspBundle\Form\User\UserPasswordType;
+// Entities
+use RASP\RaspBundle\Entity\User;
 // for user repo
 use RASP\RaspBundle\Repository\UserRepository;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -88,10 +91,25 @@ class GestionController extends Controller {
         return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView()));
     }
 
-    public function createUserAction()
+    public function createUserAction(Request $request)
     {
         // Create a new user
-        return $this;
+        $user = new User();
+        // Auto generate a new password (should be set when on userfirst cinnexion via email link)
+        $user->setPlainPassword(random_bytes(10));
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId()));
+        }
+        // Same template as editUser
+        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView()));
     }
 
     public function userSuccessAction($user_id) {
