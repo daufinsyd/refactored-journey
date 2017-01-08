@@ -12,35 +12,57 @@ user_editPassord:
     defaults:
         _controller: RASPRaspBundle:Gestion:userPassword
     requirements:
-        user: \d+
+        user_id: \d+
 
 admin_showUser:
     path:    /admin_/user/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:user
     requirements:
-        user: \d+
+        user_id: \d+
 
 admin_editUser:
     path:    /admin_/editUser/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:editUser
     requirements:
-        user: \d+
+        user_id: \d+
 
 admin_userSuccess:
     path:    /admin_/userSuccess/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:userSuccess
     requirements:
-        user: \d+
+        user_id: \d+
 
 admin_createUser:
     path:    /admin_/createUser
     defaults:
         _controller: RASPRaspBundle:Gestion:createUser
+
+admin_createUfr:
+    path:   /admin_/createUfr
+    defaults:
+        _controller:  RASPRaspBundle:Ufr:createUfr
+
+admin_listUfrs:
+    path:   /admin_/ufrs
+    defaults:
+        _controller:  RASPRaspBundle:Ufr:ufrs
+
+admin_showUfr:
+    path:   /admin_/showUfr/{ufr_id}
+    defaults:
+        _controller:  RASPRaspBundle:Ufr:showUfr
     requirements:
-        user: \d+
+        ufr_id: \d+
+
+admin_editUfr:
+    path:   /admin_/editUfr/{ufr_id}
+    defaults:
+        _controller:  RASPRaspBundle:Ufr:editUfr
+    requirements:
+        ufr_id: \d+
 
 group:
     path:    /group

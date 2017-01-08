@@ -1,0 +1,25 @@
+{% extends 'RASPRaspBundle:User:layout.html.twig' %}
+{% block meta_info %}
+<title>UFR - Édition</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+            <div class="col-sm-4">
+                One of three columns
+            </div>
+            <div class="col-sm-4">
+                One of three columns
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

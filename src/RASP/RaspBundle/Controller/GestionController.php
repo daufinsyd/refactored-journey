@@ -29,7 +29,7 @@ use RASP\RaspBundle\Repository\UserRepository;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class GestionController extends Controller {
-    // Actions for RCCF admin
+    // Actions for RCCF admin for users
 
     public function profileAction(){
         return new Response("hello world !");

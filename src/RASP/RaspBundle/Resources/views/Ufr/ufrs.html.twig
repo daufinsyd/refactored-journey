@@ -1,0 +1,26 @@
+{% extends 'RASPRaspBundle:User:layout.html.twig' %}
+
+{% block meta_info %}
+    <title>Liste des UFR</title>
+{% endblock %}
+
+
+
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}" />
+<div class="container">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+        </tr>
+    {% for ufr in listUfr %}
+        <tr>
+            <th>{{ ufr.id }}</th>
+            <th><a href="{{ path("admin_showUfr", {'ufr_id' : ufr.id}) }}">{{ ufr.name }}</a></th>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}
