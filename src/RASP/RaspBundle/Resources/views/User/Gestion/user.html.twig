@@ -20,10 +20,23 @@
                 Email: {{ user.email }}<br/>
                 Statut: {{ user.status }}<br/>
                 Grade: {{ user.rank }}<br/>
-                Ufr: {{ user.ufr }}<br/>
+                Ufr: <a href="{{ path('admin_showUfr', {'ufr_id' : user.ufr.id}) }}">{{ user.ufr }}</a><br/>
 
                 <form method="get" action="{{ path('admin_editUser', {'user_id': user.id} ) }}">
-                    <button>Éditer</button>
+                    <button class="btn btn-default">Éditer</button>
+                </form>
+
+                {# TODO: implement role protection #}
+                <form method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
+                    {% if user.enabled %}
+                    <button class="btn btn-warning">
+                        Désactiver
+                    </button>
+                    {% else %}
+                    <button class="btn btn-success">
+                        Activer
+                    </button>
+                    {% endif%}
                 </form>
 
             </div>
