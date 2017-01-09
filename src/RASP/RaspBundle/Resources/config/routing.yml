@@ -96,8 +96,3 @@ admin_editUfr:
         _controller:  RASPRaspBundle:Ufr:editUfr
     requirements:
         ufr_id: \d+
-
-group:
-    path:    /group
-    defaults:
-        _controller: RASPRaspBundle:Gestion:group
