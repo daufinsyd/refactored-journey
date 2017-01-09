@@ -20,3 +20,6 @@
 
 # files
 *.php~
+
+#bd
+app/data/*.sqlite
