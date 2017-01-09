@@ -1,0 +1,32 @@
+/* For users pages */
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.status_off {
+    color: #93918d;
+}
+
+.status_critical {
+    color: #880000;
+}
+
+.status_warning {
+    color: #d6c400;
+}
+
+.status_ok {
+    color: #6b9311;
+}
