@@ -26,7 +26,7 @@
                     <button class="btn btn-default">Éditer</button>
                 </form>
 
-                {# TODO: implement role protection #}
+                {% if user.hasRole('ROLE_SUPER_ADMIN') %}
                 <form method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
                     {% if user.enabled %}
                     <button class="btn btn-warning">
@@ -38,6 +38,7 @@
                     </button>
                     {% endif%}
                 </form>
+                {% endif %}
 
             </div>
             <div class="col-sm-4">

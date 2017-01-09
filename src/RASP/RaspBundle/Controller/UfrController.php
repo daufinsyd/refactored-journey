@@ -58,7 +58,8 @@ class UfrController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $listUsers = $em->getRepository("RASPRaspBundle:User")->findBy(array('ufr' => $ufr));
-        return $this->render("RASPRaspBundle:Ufr:ufr.html.twig", array('ufr' => $ufr, 'listUsers' => $listUsers, 'loggedInUser' => $loggedInUser));
+        $listRasp = $em->getRepository("RASPRaspBundle:Raspberry")->findBy(array('ufr' => $ufr));
+        return $this->render("RASPRaspBundle:Ufr:ufr.html.twig", array('ufr' => $ufr, 'listUsers' => $listUsers, 'loggedInUser' => $loggedInUser, 'listRasp' => $listRasp));
     }
 
     public function editUfrAction($ufr_id, Request $request)
