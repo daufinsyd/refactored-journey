@@ -6,12 +6,13 @@
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 ID: {{ ufr.id }}<br/>
                 Nom: {{ ufr.name }}<br/>
-                <!-- TODO: add list of users -->
+                <h3>Liste des utilisateurs</h3>
                 <table>
                     <tr>
                         <th>ID</th>
@@ -24,13 +25,41 @@
                     </tr>
                 {% endfor %}
                 </table>
+                <br/>
                 <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
-                    <button>Éditer</button>
+                    <button class="btn btn-info">Éditer</button>
                 </form>
 
             </div>
             <div class="col-sm-4">
-                One of three columns
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Statut</th>
+                    </tr>
+                    {% for rasp in listRasp %}
+                        <h3>Liste des équipements</h3>
+                        <tr>
+                            <th><a href="{{ path("rasp_showRasp", {'rasp_id' : rasp.id}) }}">{{ rasp.id }}</a></th>
+                            <th>
+                                {% if rasp.status == 0 %}
+                                    <span class="status_off">Éteint</span>
+                                {% elseif rasp.status == 1 %}
+                                    <span class="status_critical">Problème critique</span>
+                                {% elseif rasp.status == 2 %}
+                                    <span class="status_warning">Problème</span>
+                                {% else %}
+                                    <span class="status_ok">OK</span>
+                                {% endif %}
+                            </th>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <br/>
+                <form method="get" action="{{ path('rasp_listRasp', {'ufr_id' : ufr.id}) }}">
+                    <button class="btn btn-info">Vue détaillée</button>
+                </form>
+
             </div>
             <div class="col-sm-4">
                 One of three columns

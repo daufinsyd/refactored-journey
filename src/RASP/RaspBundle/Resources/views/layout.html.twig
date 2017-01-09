@@ -15,6 +15,14 @@
     <li class="nav-item active">
         <a class="nav-link navbar-brand" href="{{ path('admin_showUser', {'user_id' : loggedInUser.id}) }}">Mon profil</a>
     </li>
+    <li>
+        <a class="nav-link navbar-brand" href="{{ path('admin_showUfr', {'ufr_id' : loggedInUser.ufr.id}) }}">Mon UFR</a>
+    </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <a class="navbar-brand navbar-right" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+    </li>
     {#
     {% set p_arr = {profile: 'Profile', users: 'Utilisateurs', group: 'Groupes'} %}
     {% for key, item in p_arr %}
