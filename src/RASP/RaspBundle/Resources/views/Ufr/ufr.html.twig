@@ -12,6 +12,7 @@
             <div class="col-sm-4">
                 ID: {{ ufr.id }}<br/>
                 Nom: {{ ufr.name }}<br/>
+                <h3>Liste des utilisateurs</h3>
                 <table>
                     <tr>
                         <th>ID</th>
@@ -24,8 +25,9 @@
                     </tr>
                 {% endfor %}
                 </table>
+                <br/>
                 <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
-                    <button>Éditer</button>
+                    <button class="btn btn-info">Éditer</button>
                 </form>
 
             </div>
