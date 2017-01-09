@@ -1,0 +1,17 @@
+{% extends 'RASPRaspBundle:Rasp:layout.html.twig' %}
+
+{% block meta_info %}
+    <title>Raspberry</title>
+{% endblock %}
+
+
+
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
+<div class="container">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

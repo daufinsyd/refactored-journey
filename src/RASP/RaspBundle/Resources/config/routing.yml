@@ -2,6 +2,27 @@ rasp_rasp_homepage:
     path:     /
     defaults: { _controller: RASPRaspBundle:Default:index }
 
+rasp_listRasp:
+    path:   /rasp/rasps/{ufr_id}
+    defaults:
+        _controller: RASPRaspBundle:Rasp:listRasp
+    requirements:
+        ufr_id: \d+
+
+rasp_showRasp:
+    path:   /rasp/rasp/{rasp_id}
+    defaults:
+        _controller: RASPRaspBundle:Rasp:showRasp
+    requirements:
+        rasp_id:  \d+
+
+rasp_editRasp:
+    path:   /rasp/editRasp/{rasp_id}
+    defaults:
+        _controller:  RASPRaspBundle:Rasp:editRasp
+    requirements:
+        rasp_id:  \d+
+
 admin_homepage:
     path:   /admin_/
     defaults:
