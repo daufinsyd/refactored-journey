@@ -84,7 +84,7 @@ admin_listUfrs:
         _controller:  RASPRaspBundle:Ufr:ufrs
 
 admin_showUfr:
-    path:   /admin_/showUfr/{ufr_id}
+    path:   /showUfr/{ufr_id}
     defaults:
         _controller:  RASPRaspBundle:Ufr:showUfr
     requirements:
