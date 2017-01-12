@@ -1,9 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 04/01/17
- * Time: 21:07
+/*
+ * Created by sydney_manjaro the 04/01/17
  */
 
 namespace RASP\RaspBundle\Entity;

@@ -1,9 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 07/01/17
- * Time: 14:08
+/*
+ * Created by sydney_manjaro the 07/01/17
  */
 
 
