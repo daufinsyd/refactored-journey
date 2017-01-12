@@ -5,11 +5,16 @@
 
 namespace RASP\RaspBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Table(name="rasp_raspberry")
  * @ORM\Entity(repositoryClass="RASP\RaspBundle\Entity\RaspberryRepository")
+ * @UniqueEntity("uuid")
  */
+
+// the @UniqueEntity prevent duplicate from reaching the database, unique=true ensures that if it does they are refused by data layer
 
 class Raspberry
 {
@@ -19,6 +24,11 @@ class Raspberry
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(name="UUID", type="string", length=255, unique=true)
+     */
+    protected $uuid;
 
     /**
      * @ORM\Column(name="status", type="smallint")
@@ -66,6 +76,14 @@ class Raspberry
     /**
      * @return mixed
      */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getMaxVol()
     {
         return $this->maxVol;
@@ -85,6 +103,14 @@ class Raspberry
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
