@@ -1,3 +1,7 @@
+r_com:
+    resource: "@RComBundle/Resources/config/routing.yml"
+    prefix:   /
+
 rasp_rasp:
     resource: "@RASPRaspBundle/Resources/config/routing.yml"
     prefix:   /

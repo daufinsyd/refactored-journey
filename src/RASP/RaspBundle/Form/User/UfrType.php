@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 07/01/17
- * Time: 15:07
- */
-
-
+// Created by sydney_manjaro
 namespace RASP\RaspBundle\Form\User;
 
 use Doctrine\DBAL\Types\TextType;

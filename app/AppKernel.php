@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new RASP\RaspBundle\RASPRaspBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new RASP\RComBundle\RComBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
