@@ -32,4 +32,14 @@ class DefaultController extends Controller
         }
         return new Response(200);
     }
+
+    public function imboredAction(Request $request = null){
+        if (!$request == null){
+            $uid = $request->get('uid');
+            $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->find($uid);
+            $actionList = $this->getDoctrine()->getRepository("RComBundle:Action")->findBy(array("rasp" => $rasp));
+
+            return new Response(100);
+        }
+    }
 }
