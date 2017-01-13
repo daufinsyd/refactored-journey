@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
 
 class DefaultController extends Controller
 {
@@ -34,12 +35,12 @@ class DefaultController extends Controller
     }
 
     public function imboredAction(Request $request = null){
-        if (!$request == null){
-            $uid = $request->get('uid');
-            $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->find($uid);
+        if ($request != null){
+            $uuid = $request->get('uuid');
+            $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->findBy(array("uuid" => $uuid));
             $actionList = $this->getDoctrine()->getRepository("RComBundle:Action")->findBy(array("rasp" => $rasp));
-
-            return new Response(100);
+            $json = $this->get("serializer")->serialize($actionList, 'json');
+            return new Response($json);
         }
     }
 }

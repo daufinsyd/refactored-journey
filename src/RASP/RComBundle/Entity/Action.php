@@ -31,12 +31,12 @@ class Action
     protected $codeCmd;
 
     /**
-     * @ORM\Column(name="cmd", type="text"
+     * @ORM\Column(name="cmd", type="text")
      */
     protected $cmd;
 
     /**
-     * @ORM\Column(name="paramsTab", typr="simple_array")
+     * @ORM\Column(name="paramsTab", type="simple_array")
      */
     protected $paramsTab;
 }

@@ -5,3 +5,7 @@ r_com_homepage:
 r_com_announce:
     path:     /wthit/whatsup
     defaults: { _controller: RComBundle:Default:whatsup }
+
+r_com_queryAction:
+    path:     /wthit/imbored
+    defaults: { _controller: RComBundle:Default:imbored }
