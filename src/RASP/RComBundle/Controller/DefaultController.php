@@ -3,6 +3,8 @@
 namespace RASP\RComBundle\Controller;
 
 use RASP\RaspBundle\Entity\Raspberry;
+use RASP\RComBundle\Entity\RaspAction;
+use RASP\RComBundle\Repository\RaspActionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,8 +40,9 @@ class DefaultController extends Controller
         if ($request != null){
             $uuid = $request->get('uuid');
             $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->findBy(array("uuid" => $uuid));
-            $actionList = $this->getDoctrine()->getRepository("RComBundle:Action")->findBy(array("rasp" => $rasp));
+            $actionList = $this->getDoctrine()->getRepository("RComBundle:RaspAction")->findBy(array("rasp" => $rasp));
             $json = $this->get("serializer")->serialize($actionList, 'json');
+
             return new Response($json);
         }
     }

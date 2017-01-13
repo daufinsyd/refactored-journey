@@ -7,7 +7,7 @@ namespace RASP\RComBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class ActionRepository extends EntityRepository
+class RaspActionRepository extends EntityRepository
 {
 
 }
