@@ -55,7 +55,7 @@ admin_showUser:
         user_id: \d+
 
 admin_editUser:
-    path:    /admin_/editUser/{user_id}
+    path:    /editUser/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:editUser
     requirements:
