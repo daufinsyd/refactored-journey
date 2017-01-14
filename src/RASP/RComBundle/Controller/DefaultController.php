@@ -2,9 +2,15 @@
 
 namespace RASP\RComBundle\Controller;
 
+// Entities
+use RASP\RaspBundle\Entity\User;
 use RASP\RaspBundle\Entity\Raspberry;
 use RASP\RComBundle\Entity\RaspAction;
+
+// Repository
 use RASP\RComBundle\Repository\RaspActionRepository;
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,6 +62,26 @@ class DefaultController extends Controller
             $json = $serializer->serialize($actionList, 'json');
 
             return new Response($json);
+        }
+    }
+
+    public function rebootPlzAction(Request $request, $rasp_id){
+        if ($request != null) {
+            $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+            $rasp = $this->getDoctrine()->getRepository('RASPRaspBundle:Raspberry')->find($rasp_id);
+
+            if($rasp->getUfr() == $loggedInUser->getUfr()){
+                $newAction = new RaspAction();
+                $newAction->setCodeCmd(1);
+                $newAction->setCmd(10);
+                $newAction->setRasp($rasp);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($newAction);
+                $em->flush();
+
+                return $this->redirectToRoute("rasp_listActions", array('rasp_id' => $rasp_id));
+            }
         }
     }
 }

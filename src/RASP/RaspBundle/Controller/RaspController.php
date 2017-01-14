@@ -62,7 +62,7 @@ class RaspController extends Controller
         return $this->render("@RASPRasp/Rasp/editRasp.html.twig", array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
     }
 
-    public function showRaspActionsAction($rasp_id, Request $request){
+    public function listRaspActionsAction($rasp_id, Request $request){
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $listRaspActions = $this->getDoctrine()->getRepository("RComBundle:RaspAction")->findBy(array('rasp' => $rasp_id));
 

@@ -43,7 +43,7 @@
                 >{{ rasp.maxVol }}</span>
             </th>
             <th>
-                <form method="get" action="{{ path("rasp_showActions", {"rasp_id" : rasp.id}) }}">
+                <form method="get" action="{{ path("rasp_listActions", {"rasp_id" : rasp.id}) }}">
                     <button class="btn btn-block btn-warning">Contrôler</button>
                 </form>
             </th>

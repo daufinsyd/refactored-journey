@@ -41,7 +41,7 @@ class RaspAction
     protected $cmd;
 
     /**
-     * @ORM\Column(name="paramsTab", type="simple_array")
+     * @ORM\Column(name="paramsTab", type="simple_array", nullable=true)
      */
     protected $paramsTab;
 

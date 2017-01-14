@@ -23,10 +23,10 @@ rasp_editRasp:
     requirements:
         rasp_id:  \d+
 
-rasp_showActions:
+rasp_listActions:
     path:   /rasp/showActions/{rasp_id}
     defaults:
-        _controller: RASPRaspBundle:Rasp:showRaspActions
+        _controller: RASPRaspBundle:Rasp:listRaspActions
     requirements:
         rasp_id: \d+
 

@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
 <div class="container">
     <h2>Liste des actions pour la borne: {{ rasp_id }}</h2>
-    <form method="get" action="">
+    <form method="get" action="{{ path("r_com_rebootPlz", {'rasp_id' : rasp_id}) }}">
         <button class="btn btn-info">Redémarrer</button>
     </form>
     <form method="get" action="">
@@ -39,17 +39,23 @@
             <th>{{ action.status }}</th>
             <th>{% if action.codeCmd == 0 %}
                     Personnalisée
-                {% elseif action.codeCmd == 1 %}
-                    Rafraîchissement des paquets
-                {% elseif action.codeCmd == 2 %}
-                    Mise à jour
-                {% elseif action.codeCmd == 3 %}
-                    Mise à niveau
-                {% elseif action.codeCmd == 10 %}
-                    Redémarrage
+                {% else %}
+                    Système
                 {% endif %}
             </th>
-            <th>{{ action.cmd }}</th>
+            <th>{% if action.codeCmd > 0 %}
+                    {% if action.codeCmd == 1 %}
+                        Rafraîchissement des paquets
+                    {% elseif action.codeCmd == 2 %}
+                        Mise à jour
+                    {% elseif action.codeCmd == 3 %}
+                        Mise à niveau
+                    {% elseif action.codeCmd == 10 %}
+                        Redémarrage
+                    {% endif %}
+                {% else %}
+                    {{ action.cmd }}
+                {% endif %}</th>
             <th>
                 {% if action.status == 1 %}
                     <form method="get" action="">

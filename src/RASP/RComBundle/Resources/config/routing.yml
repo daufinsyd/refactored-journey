@@ -9,3 +9,10 @@ r_com_announce:
 r_com_queryAction:
     path:     /wthit/imbored
     defaults: { _controller: RComBundle:Default:imbored }
+
+r_com_rebootPlz:
+    path:     /wthit/rebootPlz/{rasp_id}
+    defaults:
+        _controller:    RComBundle:Default:rebootPlz
+    requirements:
+        rasp_id:  \d+
