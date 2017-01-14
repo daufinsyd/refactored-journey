@@ -48,7 +48,7 @@ user_editPassord:
         user_id: \d+
 
 admin_showUser:
-    path:    /admin_/user/{user_id}
+    path:    /user/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:user
     requirements:
