@@ -13,9 +13,11 @@
                 <h3>Vue d'ensemble de l'UFR</h3>
                 ID: {{ ufr.id }}<br/>
                 Nom: {{ ufr.name }}<br/>
+                {% if is_granted("ROLE_ADMIN") %}
                 <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
                     <button class="btn btn-info">Éditer le nom</button>
                 </form>
+                {% endif %}
             </div>
             <div class="col-sm-4">
 
