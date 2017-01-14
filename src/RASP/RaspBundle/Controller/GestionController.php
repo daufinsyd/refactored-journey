@@ -152,9 +152,4 @@ class GestionController extends Controller {
         }
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
-
-    public function groupAction(){
-        return $this->render('RASPRaspBundle:User/Gestion:group.html.twig');
-    }
-
 }
