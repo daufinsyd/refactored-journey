@@ -37,8 +37,9 @@
                         <th>ID</th>
                         <th>Statut</th>
                     </tr>
+                    <h3>Liste des équipements</h3>
                     {% for rasp in listRasp %}
-                        <h3>Liste des équipements</h3>
+
                         <tr>
                             <th><a href="{{ path("rasp_showRasp", {'rasp_id' : rasp.id}) }}">{{ rasp.id }}</a></th>
                             <th>
