@@ -26,6 +26,11 @@ class RaspAction
     protected $rasp;
 
     /**
+     * @ORM\Column(name="status", type="integer", options={"default":0})
+     */
+    protected $status=0;
+
+    /**
      * @ORM\Column(name="codeCmd", type="integer")
      */
     protected $codeCmd;
@@ -54,6 +59,22 @@ class RaspAction
     public function getRasp()
     {
         return $this->rasp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     /**
