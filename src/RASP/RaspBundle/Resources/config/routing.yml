@@ -23,6 +23,13 @@ rasp_editRasp:
     requirements:
         rasp_id:  \d+
 
+rasp_showActions:
+    path:   /rasp/showActions/{rasp_id}
+    defaults:
+        _controller: RASPRaspBundle:Rasp:showRaspActions
+    requirements:
+        rasp_id: \d+
+
 admin_homepage:
     path:   /admin_/
     defaults:

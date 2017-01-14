@@ -18,6 +18,7 @@
             <th>UFR</th>
             <th>Info</th>
             <th>Volume maximal</th>
+            <th>Contrôle</th>
         </tr>
         <tr>
             <th>
@@ -40,6 +41,11 @@
                     class="status_warning"
                 {% endif %}
                 >{{ rasp.maxVol }}</span>
+            </th>
+            <th>
+                <form method="get" action="{{ path("rasp_showActions", {"rasp_id" : rasp.id}) }}">
+                    <button class="btn btn-block btn-warning">Contrôler</button>
+                </form>
             </th>
         </tr>
     </table>

@@ -26,7 +26,7 @@ class Raspberry
     protected $id;
 
     /**
-     * @ORM\Column(name="UUID", type="string", length=255, unique=true)
+     * @ORM\Column(name="UUID", type="string", length=255, unique=true, nullable=true)
      */
     protected $uuid;
 
