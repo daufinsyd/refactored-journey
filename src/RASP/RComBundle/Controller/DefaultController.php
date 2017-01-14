@@ -65,6 +65,25 @@ class DefaultController extends Controller
         }
     }
 
+    public function deleteActionAction(Request $request, $rasp_id, $action_id)
+    {
+        if ($request != null) {
+            $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+            $rasp = $this->getDoctrine()->getRepository('RASPRaspBundle:Raspberry')->find($rasp_id);
+
+            if ($rasp->getUfr() == $loggedInUser->getUfr()) {
+                $action = $this->getDoctrine()->getRepository("RComBundle:RaspAction")->find($action_id);
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($action);
+                $em->flush();
+
+                return $this->redirectToRoute("rasp_listActions", array('rasp_id' => $rasp_id));
+            }
+
+            throw $this->createAccessDeniedException('Vous n\'avez pas les droits appropriés pour effectuer une telle action!');
+        }
+    }
+
     public function rebootPlzAction(Request $request, $rasp_id){
         if ($request != null) {
             $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -82,6 +101,8 @@ class DefaultController extends Controller
 
                 return $this->redirectToRoute("rasp_listActions", array('rasp_id' => $rasp_id));
             }
+
+            throw $this->createAccessDeniedException('Vous n\'avez pas les droits appropriés pour effectuer une telle action!');
         }
     }
 }

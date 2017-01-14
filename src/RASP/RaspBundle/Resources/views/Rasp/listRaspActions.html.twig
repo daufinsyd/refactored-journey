@@ -58,11 +58,11 @@
                 {% endif %}</th>
             <th>
                 {% if action.status == 1 %}
-                    <form method="get" action="">
+                    <form method="get" action="{{ path("r_com_deleteAction", {'rasp_id' : rasp_id, 'action_id' : action.id}) }}">
                         <button class="btn btn-block btn-danger">Supprimer</button>
                     </form>
                 {% else %}
-                    <form method="get" action="">
+                    <form method="get" action="{{ path("r_com_deleteAction", {'rasp_id' : rasp_id, 'action_id' : action.id}) }}">
                         <button class="btn btn-block btn-warning">Annuler</button>
                     </form>
                 {% endif %}
