@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 08/01/17
- * Time: 16:06
+ * Created by sydney_manjaro08/01/17
  */
 
 namespace RASP\RaspBundle\Controller;
@@ -14,9 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-// Types
-use RASP\RaspBundle\Form\User\RaspberryType;
 
 // Entities
 use RASP\RaspBundle\Entity\Raspberry;
@@ -30,6 +24,7 @@ class RaspController extends Controller
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->find($rasp_id);
+
 
         return $this->render("RASPRaspBundle:Rasp:rasp.html.twig", array('rasp' => $rasp, 'loggedInUser' => $loggedInUser));
     }
