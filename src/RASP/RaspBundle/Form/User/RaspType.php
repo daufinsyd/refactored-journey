@@ -25,6 +25,7 @@ class RaspType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $listUfr = $options['listUfr'];
+        $isAdmin = $options['isAdmin'];
         $builder
             ->add('place', null, array('required' => true, 'label' => 'Emplacement physique'))
             ->add('status', null, array('required' => true, 'label' => 'Statut'))
@@ -34,8 +35,12 @@ class RaspType extends AbstractType
                     'class' => 'RASP\RaspBundle\Entity\Ufr',
                     'choices' => $listUfr
             ))
-            ->add('save', SubmitType::class)
         ;
+        if($isAdmin){
+            $builder->add('uuid');
+        }
+
+        $builder->add('save', SubmitType::class);
 
     }
 
@@ -43,6 +48,7 @@ class RaspType extends AbstractType
     {
         $resolver->setDefaults(array(
             'listUfr' => null,
+            'isAdmin' => null,
         ));
     }
 }

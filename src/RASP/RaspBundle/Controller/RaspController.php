@@ -43,7 +43,10 @@ class RaspController extends Controller
         $listUfr = $this->getDoctrine()->getRepository('RASPRaspBundle:Ufr')->findAll();
         $rasp = $this->getDoctrine()->getRepository('RASPRaspBundle:Raspberry')->find($rasp_id);
 
-        $form = $this->createForm(RaspType::class, $rasp, array('listUfr' => $listUfr));
+        if ($this->isGranted('ROLE_ADMIN')) $isAdmin = True;
+        else $isAdmin = False;
+
+        $form = $this->createForm(RaspType::class, $rasp, array('listUfr' => $listUfr, 'isAdmin' => $isAdmin));
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
