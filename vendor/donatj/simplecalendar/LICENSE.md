@@ -1,3 +1,24 @@
+Copyright for portions of project SimpleCalendarPlus are held by [Jesse G. Donat, 2013] as part of project Bar. All other copyright for project SimpleCalendarPlus are held by [Sydney Gems, 2017].
+
+GPL License v3
+===========
+
+SimpleCalendarPlus is a simple php calendar based on SimpleCalendar
+Copyright (c) 2017 Sydney Gems
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 The MIT License
 ===============
 
