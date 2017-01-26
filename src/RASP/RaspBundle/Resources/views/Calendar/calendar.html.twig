@@ -10,9 +10,12 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/SimpleCalendar.css') }}"/>
 <div class="container">
-    <h1>Calendrier de la bone </h1>
+    <h1 id="a">Calendrier de la borne </h1>
 
     CAL:
     {{ calendar.show }}
 </div>
+
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}"></script>
+
 {% endblock %}
