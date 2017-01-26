@@ -1,15 +1,21 @@
 {
-	"name"       : "donatj/simplecalendar",
+	"name"       : "daufinsyd/simplecalendarplus",
 	"type"       : "library",
-	"description": "A light, easy to use calendar rendering library",
+	"description": "A light, easy to use calendar rendering library based on SimpleCalendar",
 	"keywords"   : ["calendar"],
-	"homepage"   : "http://donatstudios.com/SimpleCalendar",
-	"license"    : "MIT",
+	"homepage"   : "http://gitlab.com/daufinsyd/SimpleCalendarPlus",
+	"license"    : "GPL",
 	"require"    : {
 		"php"         : ">=5.3.0",
 		"ext-calendar": "*"
 	},
 	"authors"    : [
+		{
+			"name"	  : "Sydney Gems",
+			"email"   : "sydney.gems@openmailbox.org",
+			"homepage": "http://sydney.gems.technology",
+			"role"    : "Developer"
+		},
 		{
 			"name"    : "Jesse G. Donat",
 			"email"   : "donatj@gmail.com",

@@ -10,7 +10,7 @@ function eventClickListener() {
     var events = document.getElementsByClassName('event');
     for( var i=0; i < events.length; i++){
         events[i].addEventListener('click', function (event) {
-            console.log('event:', event, 'nodeValue:', event.target.nodeName);
+            console.log('event:', event, 'nodeValue:', event.target.getAttribute('name'));
         });
     }
 }
