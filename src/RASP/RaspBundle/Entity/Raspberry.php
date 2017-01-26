@@ -145,6 +145,14 @@ class Raspberry
         return $this->ufr;
     }
 
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+    }
+
 
     /**
      * @param mixed $info
