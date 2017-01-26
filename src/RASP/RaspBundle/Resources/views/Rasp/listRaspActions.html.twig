@@ -1,0 +1,79 @@
+{% extends 'RASPRaspBundle:Rasp:layout.html.twig' %}
+
+{% block meta_info %}
+    <title>Liste des actions</title>
+{% endblock %}
+
+
+
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
+<div class="container">
+    <h2>Liste des actions pour la borne: {{ rasp_id }}</h2>
+    <form method="get" action="{{ path("r_com_rebootPlz", {'rasp_id' : rasp_id}) }}">
+        <button class="btn btn-info">Redémarrer</button>
+    </form>
+    <form method="get" action="">
+        <button class="btn btn-info">Mettre à jour</button>
+    </form>
+    <form method="get" action="">
+        <button class="btn btn-warning">Mettre à niveau</button>
+    </form>
+    <form method="get" action="">
+        <button class="btn btn-success">Effectuer une nouvelle action personnalisée</button>
+    </form>
+    <h2>Actions réaliées ou en cours</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>type</th>
+            <th>commande</th>
+            <th>Finir</th>
+            <th>Recommencer</th>
+        </tr>
+    {% for action in listRaspActions %}
+        <tr>
+            <th>{{ action.id }}</th>
+            <th>{{ action.status }}</th>
+            <th>{% if action.codeCmd == 0 %}
+                    Personnalisée
+                {% else %}
+                    Système
+                {% endif %}
+            </th>
+            <th>{% if action.codeCmd > 0 %}
+                    {% if action.codeCmd == 1 %}
+                        Rafraîchissement des paquets
+                    {% elseif action.codeCmd == 2 %}
+                        Mise à jour
+                    {% elseif action.codeCmd == 3 %}
+                        Mise à niveau
+                    {% elseif action.codeCmd == 10 %}
+                        Redémarrage
+                    {% endif %}
+                {% else %}
+                    {{ action.cmd }}
+                {% endif %}</th>
+            <th>
+                {% if action.status == 1 %}
+                    <form method="get" action="{{ path("r_com_deleteAction", {'rasp_id' : rasp_id, 'action_id' : action.id}) }}">
+                        <button class="btn btn-block btn-danger">Supprimer</button>
+                    </form>
+                {% else %}
+                    <form method="get" action="{{ path("r_com_deleteAction", {'rasp_id' : rasp_id, 'action_id' : action.id}) }}">
+                        <button class="btn btn-block btn-warning">Annuler</button>
+                    </form>
+                {% endif %}
+            </th>
+            <th>
+                <form method="get" action="">
+                    <button class="btn btn-block btn-success">Recommencer</button>
+                </form>
+            </th>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

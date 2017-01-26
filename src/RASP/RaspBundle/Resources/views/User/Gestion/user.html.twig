@@ -26,6 +26,10 @@
                     <button class="btn btn-default">Éditer</button>
                 </form>
 
+                <form method="get" action="{{ path('fos_user_change_password') }}">
+                    <button class="btn btn-default btn-success">Changer de mot de passe</button>
+                </form>
+
                 {% if user.hasRole('ROLE_SUPER_ADMIN') %}
                 <form method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
                     {% if user.enabled %}

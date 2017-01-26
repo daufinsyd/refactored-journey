@@ -28,6 +28,8 @@ use RASP\RaspBundle\Entity\User;
 use RASP\RaspBundle\Repository\UserRepository;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 class GestionController extends Controller {
     // Actions for RCCF admin for users
 
@@ -47,7 +49,10 @@ class GestionController extends Controller {
         // Show specific user
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
-        return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
+        if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
+            return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
+        }
+        else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions");
     }
 
     public function userPasswordAction($user_id, Request $request)
@@ -75,46 +80,51 @@ class GestionController extends Controller {
         // Show specific user
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+        if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
+            $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
 
-        $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
+            $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr));
+            $form->handleRequest($request);
 
-        $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr));
-        $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
 
-        if($form->isSubmitted() && $form->isValid()) {
+                $user = $form->getData();
 
-            $user = $form->getData();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+                return $this->redirectToRoute('admin_showUser', array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
+            }
 
-            return $this->redirectToRoute('admin_showUser', array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
+            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
         }
-
-        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+        else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
 
     public function createUserAction(Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
-        // Create a new user
-        $user = new User();
-        // Auto generate a new password (should be set when on userfirst cinnexion via email link)
-        $user->setPlainPassword(random_bytes(10));
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // Create a new user
+            $user = new User();
+            // Auto generate a new password (should be set when on userfirst cinnexion via email link)
+            $user->setPlainPassword(random_bytes(10));
 
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+            $form = $this->createForm(UserType::class, $user);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user = $form->getData();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
+            }
+            // Same template as editUser
+            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
         }
-        // Same template as editUser
-        return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+        else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
 
     public function userSuccessAction($user_id) {
@@ -123,25 +133,23 @@ class GestionController extends Controller {
         return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
     }
 
-    public function toggleUserAction($user_id){
+    public function toggleUserAction($user_id)
+    {
         // TODO: implement ROLE
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
-        $user = $this->getDoctrine()->getRepository('RASPRaspBundle:User')->find($user_id);
-        $em = $this->getDoctrine()->getManager();
-        if ($user->isEnabled()) {
-            $user->setEnabled(false);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $user = $this->getDoctrine()->getRepository('RASPRaspBundle:User')->find($user_id);
+            $em = $this->getDoctrine()->getManager();
+            if ($user->isEnabled()) {
+                $user->setEnabled(false);
+            } else {
+                $user->setEnabled(true);
+            }
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
         }
-        else {
-            $user->setEnabled(true);
-        }
-        $em->persist($user);
-        $em->flush();
-
-        return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
+        else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
-
-    public function groupAction(){
-        return $this->render('RASPRaspBundle:User/Gestion:group.html.twig');
-    }
-
 }

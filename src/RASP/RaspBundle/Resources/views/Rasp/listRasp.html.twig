@@ -10,6 +10,7 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
 <div class="container">
+    <h1>Liste des bornes votre UFR</h1>
     <table>
         <tr>
             <th>Statut</th>
@@ -18,6 +19,8 @@
             <th>UFR</th>
             <th>Info</th>
             <th>Volume maximal</th>
+            <th>Éditer</th>
+            <th>Contrôle</th>
         </tr>
     {% for rasp in listRasp %}
         <tr>
@@ -41,6 +44,16 @@
                             class="status_warning"
                         {% endif %}
                 >{{ rasp.maxVol }}</span>
+            </th>
+            <th>
+                <form method="get" action="{{ path("rasp_editRasp", {'rasp_id' : rasp.id}) }}">
+                    <button class="btn btn-block btn-info">Editer</button>
+                </form>
+            </th>
+            <th>
+                <form method="get" action="{{ path("rasp_listActions", {"rasp_id" : rasp.id}) }}">
+                    <button class="btn btn-block btn-warning">Contrôler</button>
+                </form>
             </th>
         </tr>
     {% endfor %}
