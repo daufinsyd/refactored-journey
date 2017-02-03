@@ -30,13 +30,6 @@ rasp_listActions:
     requirements:
         rasp_id: \d+
 
-calendar_showCalendar:
-    path:   /rasp/calendar/showCalendar/{calendar_id}
-    defaults:
-        _controller: RASPRaspBundle:Calendar:showCalendar
-    requirements:
-        calendar_id:   \d+
-
 admin_homepage:
     path:   /admin_/
     defaults:
