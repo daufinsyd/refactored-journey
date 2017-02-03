@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-12">
                 Utilisateur
                 {% if user.enabled %}
                     actif
@@ -30,7 +30,7 @@
                     <button class="btn btn-default btn-success">Changer de mot de passe</button>
                 </form>
 
-                {% if user.hasRole('ROLE_SUPER_ADMIN') %}
+                {% if is_granted('ROLE_ADMIN') %}
                 <form method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
                     {% if user.enabled %}
                     <button class="btn btn-warning">
@@ -42,14 +42,12 @@
                     </button>
                     {% endif%}
                 </form>
+                <form method="get" action="{{ path('admin_deleteuser', {'user_id' : user.id})  }}">
+                    <button class="btn btn-warning"> Supprimer </button>
+
+                </form>
                 {% endif %}
 
-            </div>
-            <div class="col-sm-4">
-                One of three columns
-            </div>
-            <div class="col-sm-4">
-                One of three columns
             </div>
         </div>
     </div>

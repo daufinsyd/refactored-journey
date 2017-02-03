@@ -82,4 +82,4 @@ fos_user:
     user_class: RASP\RaspBundle\Entity\User
 
     service:
-            mailer:               fos_user.mailer.twig_swift
+        mailer: fos_user.mailer.twig_swift

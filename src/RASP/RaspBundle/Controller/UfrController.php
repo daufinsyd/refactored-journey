@@ -34,6 +34,7 @@ use RASP\RaspBundle\Entity\UfrRepository;
  *    public ufrsAction()
  *    public showUfrAction(int)
  *    public editUfrAction(int, request)
+ *    public ufrDbUpdate(form, request)
  *
  * Description :
  *    Aims to handle Ufr entities gesture, that is, edit/create/show ufr.
@@ -62,7 +63,6 @@ class UfrController extends Controller
         $form = $this->createForm(UfrType::class, $ufr);
         $form->handleRequest($request);
 
-        // if the form is correct, it is added to database through Doctrine
         if($form->isSubmitted() && $form->isValid()){
             $ufr = $form->getData();
             $em = $this->getDoctrine()->getManager();
@@ -117,6 +117,7 @@ class UfrController extends Controller
     }
 
 
+
     /* editUfrAction ---------------------------------------------------------------------------------------------------
      * Input :
      *   int     $ufr_id  --> ufr identifier
@@ -142,6 +143,9 @@ class UfrController extends Controller
             $em->flush();
             return $this->redirectToRoute("admin_showUfr", array('ufr_id' => $ufr_id, 'loggedInUser' => $loggedInUser));
         }
+
         return $this->render("RASPRaspBundle:Ufr:editUfr.html.twig", array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+
     }
+
 }
