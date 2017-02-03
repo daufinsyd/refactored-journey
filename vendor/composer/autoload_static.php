@@ -189,13 +189,6 @@ class ComposerStaticInit0a2fcc43741cce9f826e26f7632f65c5
     );
 
     public static $prefixesPsr0 = array (
-        'd' => 
-        array (
-            'donatj' => 
-            array (
-                0 => __DIR__ . '/..' . '/donatj/simplecalendar/lib',
-            ),
-        ),
         'T' => 
         array (
             'Twig_' => 
