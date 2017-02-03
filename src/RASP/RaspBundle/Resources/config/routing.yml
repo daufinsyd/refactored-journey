@@ -80,6 +80,13 @@ admin_toggleUser:
     requirements:
         user_id: \d+
 
+admin_deleteuser:
+    path:    /admin_/deleteuser/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:deleteUser
+    requirements:
+       user_id: \d+
+
 admin_createUfr:
     path:   /admin_/createUfr
     defaults:

@@ -33,10 +33,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class GestionController extends Controller {
     // Actions for RCCF admin for users
 
-    public function profileAction(){
-        return new Response("hello world !");
-    }
-
     public function usersAction(){
         // List users
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -119,12 +115,30 @@ class GestionController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
+
                 return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
             }
             // Same template as editUser
             return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
         }
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
+    }
+
+    public function deleteUserAction($user_id)
+    {
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository("RASPRaspBundle:User")->find($user_id);
+
+        if($user && !($user->getId() == $loggedInUser->getId())){
+            $em->remove($user);
+            $em->flush();
+
+        }
+
+        $listUser = $em->getRepository("RASPRaspBundle:User")->findAll();
+        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
+
     }
 
     public function userSuccessAction($user_id) {

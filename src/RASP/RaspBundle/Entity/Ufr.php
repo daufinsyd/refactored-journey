@@ -5,6 +5,7 @@
 
 namespace RASP\RaspBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="rasp_ufr")
@@ -23,6 +24,7 @@ class Ufr
     /**
      * @ORM\Column(name="name", type="string", length=255)
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     protected $name;
 

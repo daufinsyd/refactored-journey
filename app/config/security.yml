@@ -43,7 +43,7 @@ security:
     access_control:
             - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }  #  User must not be connected
             - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }  #  User must not be connected
-            #- { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/admin/, role: ROLE_ADMIN }  # User has to be admin
             - { path: ^/admin_/, role: ROLE_SUPER_ADMIN} # User has to be super admin
 
