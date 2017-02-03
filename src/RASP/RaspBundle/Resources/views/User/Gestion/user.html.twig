@@ -1,53 +1,87 @@
 {% extends 'RASPRaspBundle:User:layout.html.twig' %}
 {% block meta_info %}
-<title>Profile utilisateur</title>
+<title>Profil utilisateur</title>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}" />
 {% endblock %}
 
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                Utilisateur
-                {% if user.enabled %}
-                    actif
-                {% else %}
-                    inactif
-                {% endif %}
-                <br/>
-                ID: {{ user.id }}<br/>
-                Nom: {{ user.username }}<br/>
-                Email: {{ user.email }}<br/>
-                Statut: {{ user.status }}<br/>
-                Grade: {{ user.rank }}<br/>
-                Ufr: <a href="{{ path('admin_showUfr', {'ufr_id' : user.ufr.id}) }}">{{ user.ufr }}</a><br/>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-6"> Champ </th>
+                    <th class="col-md-6"> Valeur </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-md-6"> Utilisateur </td>
+                    <td class="col-md-6"> {% if user.enabled %} actif {% else %} inactif {% endif %} </td>
+                </tr>
+                <tr>
+                    <td class="col-md-6"> ID </td>
+                    <td class="col-md-6"> {{ user.id }} </td>
+                </tr>
+                <tr>
+                    <td class="col-md-6"> Nom </td>
+                    <td class="col-md-6"> {{ user.username }} </td>
+                </tr>
+                <tr>
+                    <td class="col-md-6"> Email </td>
+                    <td class="col-md-6"> {{ user.email }} </td>
+                </tr>
+                <tr>
+                    <td class="col-md-6"> Statut </td>
+                    <td class="col-md-6"> {{ user.status }} </td>
+                </tr>
+                <tr>
+                    <td class="col-md-6"> Grade </td>
+                    <td class="col-md-6"> {{ user.rank }} </td>
+                </tr>
+                <tr>
+                    <td class="col-md-6"> UFR </td>
+                    <td class="col-md-6"> <a href="{{ path('admin_showUfr', {'ufr_id' : user.ufr.id}) }}">{{ user.ufr }}</a> </td>
+                </tr>
 
-                <form method="get" action="{{ path('admin_editUser', {'user_id': user.id} ) }}">
+            </tbody>
+
+        </table>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+
+
+                <form class="user-form" method="get" action="{{ path('admin_editUser', {'user_id': user.id} ) }}">
                     <button class="btn btn-default">Éditer</button>
                 </form>
 
-                <form method="get" action="{{ path('fos_user_change_password') }}">
+                <form class="user-form" method="get" action="{{ path('fos_user_change_password') }}">
                     <button class="btn btn-default btn-success">Changer de mot de passe</button>
                 </form>
 
+
+
+            </div>
+            <div class="col-sm-4">
                 {% if is_granted('ROLE_ADMIN') %}
-                <form method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
-                    {% if user.enabled %}
-                    <button class="btn btn-warning">
-                        Désactiver
-                    </button>
-                    {% else %}
-                    <button class="btn btn-success">
-                        Activer
-                    </button>
-                    {% endif%}
-                </form>
-                <form method="get" action="{{ path('admin_deleteuser', {'user_id' : user.id})  }}">
-                    <button class="btn btn-warning"> Supprimer </button>
+                    <form class="user-form" method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
+                        {% if user.enabled %}
+                            <button class="btn btn-warning">
+                                Désactiver
+                            </button>
+                        {% else %}
+                            <button class="btn btn-success">
+                                Activer
+                            </button>
+                        {% endif %}
+                    </form>
+                    <form class="user-form" method="get" action="{{ path('admin_deleteuser', {'user_id' : user.id})  }}">
+                        <button class="btn btn-warning"> Supprimer </button>
 
-                </form>
+                    </form>
                 {% endif %}
-
             </div>
         </div>
     </div>

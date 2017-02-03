@@ -33,10 +33,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class GestionController extends Controller {
     // Actions for RCCF admin for users
 
-    public function profileAction(){
-        return new Response("hello world !");
-    }
-
     public function usersAction(){
         // List users
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -141,7 +137,7 @@ class GestionController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository("RASPRaspBundle:User")->find($user_id);
 
-        if($user){
+        if($user && !($user->getId() == $loggedInUser->getId())){
             $em->remove($user);
             $em->flush();
 

@@ -22,3 +22,8 @@ tr:nth-child(even) {
 .inactif {
     color: #880000;
 }
+
+.user-form {
+    margin : 5px 5px 5px 5px;
+
+}
