@@ -33,15 +33,34 @@ class DefaultController extends Controller
         if ($request != null) {
             $content = $request->getContent();
 
-            $id = $request->get('id');
+            // Get data
+            $uuid = $request->get('id');
             $status = $request->get('status');
             $info = $request->get('info');
             $shortLog = $request->get('shortLog');
 
             $fs = new Filesystem();
-            $data = array("id" => $id, "info" => $info, "status" => $status, "shortLog" => $shortLog);
+            $data = array("uuid" => $uuid, "info" => $info, "status" => $status, "shortLog" => $shortLog);
             $json = json_encode($data);
             $fs->dumpFile('/home/sydney_manjaro/tmp.json', $json);
+
+            // Get or create the rasp
+            $borne = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->findBy(array("uuid" => $uuid));
+            if(!$borne) {
+                // If doesn't already exist
+                $borne = new Raspberry();
+                $borne->setUuid($uuid);
+            }
+            else $borne = $borne[0];  // If already exist, then $born is an array (cf up), but uuid is unique so we get the unique element of the array
+            // Set / update data
+            $borne->setStatus($status);
+            $borne->setInfo($info);
+            $borne->setShortLog($shortLog);
+
+            // Save data
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($borne);
+            $em->flush();
         }
         return new Response(200);
     }

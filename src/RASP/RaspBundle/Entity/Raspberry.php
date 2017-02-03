@@ -31,34 +31,34 @@ class Raspberry
     protected $uuid;
 
     /**
-     * @ORM\Column(name="status", type="smallint")
+     * @ORM\Column(name="status", type="smallint", nullable=true)
      */
-    protected $status;
+    protected $status=0;
 
     /**
      * @ORM\Column(name="place", type="string", length=255)
      */
-    protected $place;
+    protected $place="";
 
     /**
      * @ORM\Column(name="info", type="string", length=255)
      */
-    protected $info;
+    protected $info="";
 
     /**
      * @ORM\Column(name="maxVol", type="smallint")
      */
-    protected $maxVol;
+    protected $maxVol=100;
 
     /**
      * @ORM\Column(name="scheduleFile", type="text")
      */
-    protected $scheduleFile;
+    protected $scheduleFile="";
 
     /**
      * @ORM\Column(name="shortLog", type="text")
      */
-    protected $shortLog;
+    protected $shortLog="";
 
     /**
      * @ORM\ManyToOne(targetEntity="RASP\RaspBundle\Entity\Ufr")
@@ -111,6 +111,14 @@ class Raspberry
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
     }
 
     /**
@@ -200,6 +208,10 @@ class Raspberry
     public function setUfr($ufr)
     {
         $this->ufr = $ufr;
+    }
+
+    public function Raspberry(){
+
     }
 
 }
