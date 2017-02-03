@@ -33,7 +33,7 @@ class Raspberry
     /**
      * @ORM\Column(name="status", type="smallint", nullable=true)
      */
-    protected $status=0;
+    protected $status=-1;
 
     /**
      * @ORM\Column(name="place", type="string", length=255)
