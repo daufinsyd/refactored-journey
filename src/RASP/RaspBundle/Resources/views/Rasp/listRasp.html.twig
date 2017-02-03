@@ -10,14 +10,18 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
 <div class="container">
+    <h1>Liste des bornes votre UFR</h1>
     <table>
         <tr>
             <th>Statut</th>
             <th>ID</th>
+            <th>UUID</th>
             <th>Emplacement</th>
             <th>UFR</th>
             <th>Info</th>
             <th>Volume maximal</th>
+            <th>Éditer</th>
+            <th>Contrôle</th>
         </tr>
     {% for rasp in listRasp %}
         <tr>
@@ -32,7 +36,8 @@
                     <span class="status_ok">OK</span>
                 {% endif %}
             </th>
-            <th><a href="{{ path("rasp_editRasp", {'rasp_id' : rasp.id}) }}">{{ rasp.id }}</a></th>
+            <th><a href="{{ path("rasp_showRasp", {'rasp_id' : rasp.id}) }}">{{ rasp.id }}</a></th>
+            <th>{{ rasp.uuid }}</th>
             <th>{{ rasp.place }}</th>
             <th><a href="{{ path("admin_showUfr", {'ufr_id' : rasp.ufr.id}) }}">{{ rasp.ufr }}</a></th>
             <th>{{ rasp.info }}</th>
@@ -41,6 +46,16 @@
                             class="status_warning"
                         {% endif %}
                 >{{ rasp.maxVol }}</span>
+            </th>
+            <th>
+                <form method="get" action="{{ path("rasp_editRasp", {'rasp_id' : rasp.id}) }}">
+                    <button class="btn btn-block btn-info">Editer</button>
+                </form>
+            </th>
+            <th>
+                <form method="get" action="{{ path("rasp_listActions", {"rasp_id" : rasp.id}) }}">
+                    <button class="btn btn-block btn-warning">Contrôler</button>
+                </form>
             </th>
         </tr>
     {% endfor %}

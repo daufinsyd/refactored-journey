@@ -10,8 +10,17 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
+                <h3>Vue d'ensemble de l'UFR</h3>
                 ID: {{ ufr.id }}<br/>
                 Nom: {{ ufr.name }}<br/>
+                {% if is_granted("ROLE_ADMIN") %}
+                <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
+                    <button class="btn btn-info">Éditer le nom</button>
+                </form>
+                {% endif %}
+            </div>
+            <div class="col-sm-4">
+
                 <h3>Liste des utilisateurs</h3>
                 <table>
                     <tr>
@@ -26,10 +35,6 @@
                 {% endfor %}
                 </table>
                 <br/>
-                <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
-                    <button class="btn btn-info">Éditer</button>
-                </form>
-
             </div>
             <div class="col-sm-4">
                 <table>
@@ -37,8 +42,9 @@
                         <th>ID</th>
                         <th>Statut</th>
                     </tr>
+                    <h3>Liste des équipements</h3>
                     {% for rasp in listRasp %}
-                        <h3>Liste des équipements</h3>
+
                         <tr>
                             <th><a href="{{ path("rasp_showRasp", {'rasp_id' : rasp.id}) }}">{{ rasp.id }}</a></th>
                             <th>
@@ -60,9 +66,6 @@
                     <button class="btn btn-info">Vue détaillée</button>
                 </form>
 
-            </div>
-            <div class="col-sm-4">
-                One of three columns
             </div>
         </div>
     </div>

@@ -1,0 +1,4 @@
+services:
+#    r_com.example:
+#        class: RASP\RComBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -15,9 +15,24 @@
     <li class="nav-item active">
         <a class="nav-link navbar-brand" href="{{ path('admin_showUser', {'user_id' : loggedInUser.id}) }}">Mon profil</a>
     </li>
-    <li>
-        <a class="nav-link navbar-brand" href="{{ path('admin_showUfr', {'ufr_id' : loggedInUser.ufr.id}) }}">Mon UFR</a>
-    </li>
+    {% if is_granted('ROLE_ADMIN') %}
+        <li>
+            <a class="nav-link navbar-brand" href="{{ path('admin_homepage') }}">Administration</a>
+        </li>
+        <li>
+            <a class="nav-link nav-item" href="{{ path('admin_listUfrs') }}">Les UFR</a>
+        </li>
+        <li>
+            <a class="nav-link nav-item" href="{{ path('admin_users') }}">Les Utilisateurs</a>
+        </li>
+    {% else %}
+        <li>
+            <a class="nav-link navbar-brand" href="{{ path('admin_showUfr', {'ufr_id' : loggedInUser.ufr.id}) }}">Mon UFR</a>
+        </li>
+        <li>
+            <a class="nav-link navbar-brand" href="{{ path('rasp_listRasp', {'ufr_id' : loggedInUser.ufr.id}) }}">Mes Bornes</a>
+        </li>
+    {% endif %}
 </ul>
 <ul class="nav navbar-nav navbar-right">
     <li>

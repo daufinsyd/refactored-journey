@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 08/01/17
- * Time: 16:06
+ * Created by sydney_manjaro08/01/17
  */
 
 namespace RASP\RaspBundle\Controller;
@@ -14,9 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-// Types
-use RASP\RaspBundle\Form\User\RaspberryType;
 
 // Entities
 use RASP\RaspBundle\Entity\Raspberry;
@@ -30,6 +24,7 @@ class RaspController extends Controller
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->find($rasp_id);
+
 
         return $this->render("RASPRaspBundle:Rasp:rasp.html.twig", array('rasp' => $rasp, 'loggedInUser' => $loggedInUser));
     }
@@ -48,7 +43,10 @@ class RaspController extends Controller
         $listUfr = $this->getDoctrine()->getRepository('RASPRaspBundle:Ufr')->findAll();
         $rasp = $this->getDoctrine()->getRepository('RASPRaspBundle:Raspberry')->find($rasp_id);
 
-        $form = $this->createForm(RaspType::class, $rasp, array('listUfr' => $listUfr));
+        if ($this->isGranted('ROLE_ADMIN')) $isAdmin = True;
+        else $isAdmin = False;
+
+        $form = $this->createForm(RaspType::class, $rasp, array('listUfr' => $listUfr, 'isAdmin' => $isAdmin));
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -60,6 +58,15 @@ class RaspController extends Controller
             return $this->render("RASPRaspBundle:Rasp:rasp.html.twig", array('rasp' => $rasp, 'rasp_id' => $rasp_id, 'loggedInUser' => $loggedInUser));
         }
         return $this->render("@RASPRasp/Rasp/editRasp.html.twig", array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+    }
+
+    public function listRaspActionsAction($rasp_id, Request $request){
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+        $listRaspActions = $this->getDoctrine()->getRepository("RComBundle:RaspAction")->findBy(array('rasp' => $rasp_id));
+
+        return $this->render("RASPRaspBundle:Rasp:listRaspActions.html.twig", array('loggedInUser' => $loggedInUser, 'listRaspActions' => $listRaspActions, 'rasp_id' => $rasp_id));
+
+
     }
 
 }

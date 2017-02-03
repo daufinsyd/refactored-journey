@@ -23,6 +23,13 @@ rasp_editRasp:
     requirements:
         rasp_id:  \d+
 
+rasp_listActions:
+    path:   /rasp/showActions/{rasp_id}
+    defaults:
+        _controller: RASPRaspBundle:Rasp:listRaspActions
+    requirements:
+        rasp_id: \d+
+
 admin_homepage:
     path:   /admin_/
     defaults:
@@ -41,14 +48,14 @@ user_editPassord:
         user_id: \d+
 
 admin_showUser:
-    path:    /admin_/user/{user_id}
+    path:    /user/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:user
     requirements:
         user_id: \d+
 
 admin_editUser:
-    path:    /admin_/editUser/{user_id}
+    path:    /editUser/{user_id}
     defaults:
         _controller: RASPRaspBundle:Gestion:editUser
     requirements:
@@ -73,6 +80,13 @@ admin_toggleUser:
     requirements:
         user_id: \d+
 
+admin_deleteuser:
+    path:    /admin_/deleteuser/{user_id}
+    defaults:
+        _controller: RASPRaspBundle:Gestion:deleteUser
+    requirements:
+       user_id: \d+
+
 admin_createUfr:
     path:   /admin_/createUfr
     defaults:
@@ -84,7 +98,7 @@ admin_listUfrs:
         _controller:  RASPRaspBundle:Ufr:ufrs
 
 admin_showUfr:
-    path:   /admin_/showUfr/{ufr_id}
+    path:   /showUfr/{ufr_id}
     defaults:
         _controller:  RASPRaspBundle:Ufr:showUfr
     requirements:

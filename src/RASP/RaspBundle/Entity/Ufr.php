@@ -1,13 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 04/01/17
- * Time: 21:28
+/*
+ * Created by sydney_manjaro the 04/01/17
  */
 
 namespace RASP\RaspBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="rasp_ufr")
@@ -26,6 +24,7 @@ class Ufr
     /**
      * @ORM\Column(name="name", type="string", length=255)
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     protected $name;
 

@@ -1,0 +1,27 @@
+r_com_homepage:
+    path:     /wthit/
+    defaults: { _controller: RComBundle:Default:index }
+
+r_com_announce:
+    path:     /wthit/whatsup
+    defaults: { _controller: RComBundle:Default:whatsup }
+
+r_com_queryAction:
+    path:     /wthit/imbored
+    defaults: { _controller: RComBundle:Default:imbored }
+
+r_com_deleteAction:
+    path:     /wthit/deleteAction/{rasp_id}/{action_id}
+    defaults:
+        _controller: RComBundle:Default:deleteAction
+    requirements:
+        rasp_id:    \d+
+        action_id:  \d+
+
+
+r_com_rebootPlz:
+    path:     /wthit/rebootPlz/{rasp_id}
+    defaults:
+        _controller:    RComBundle:Default:rebootPlz
+    requirements:
+        rasp_id:  \d+

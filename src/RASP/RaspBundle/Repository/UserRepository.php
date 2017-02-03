@@ -1,9 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sydney_manjaro
- * Date: 05/01/17
- * Time: 16:49
+/*
+ * Created by sydney_manjaro the 05/01/17
  */
 
 // src/RASP/RaspBundle/Repository/UserRepository.php

@@ -1,10 +1,10 @@
+r_com:
+    resource: "@RComBundle/Resources/config/routing.yml"
+    prefix:   /
+
 rasp_rasp:
     resource: "@RASPRaspBundle/Resources/config/routing.yml"
     prefix:   /
-
-oc_platform:
-    resource: "@OCPlatformBundle/Resources/config/routing.yml"
-    prefix:   /platform
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
