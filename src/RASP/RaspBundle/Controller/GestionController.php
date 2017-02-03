@@ -116,13 +116,6 @@ class GestionController extends Controller {
                 $em->persist($user);
                 $em->flush();
 
-                /*$mesg = \Swift_Message::newInstance()
-                    ->setSubject('Hello Email')
-                    ->setFrom('simon.vilmin@gmail.com')
-                    ->setTo('simon.vilmin@gmail.com')
-                    ->setBody('Bonjour', 'text/html');
-
-                $this->get('mailer')->send($mesg);*/
                 return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
             }
             // Same template as editUser
