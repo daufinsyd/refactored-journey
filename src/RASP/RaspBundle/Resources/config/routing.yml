@@ -47,6 +47,12 @@ user_editPassord:
     requirements:
         user_id: \d+
 
+rasp_listOrphan:
+    path:     /admin_/listOrphanRasp
+    defaults:
+        _controller:  RASPRaspBundle:Rasp:listOrphanRasp
+
+
 admin_showUser:
     path:    /user/{user_id}
     defaults:

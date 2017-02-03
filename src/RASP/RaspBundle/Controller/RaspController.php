@@ -20,6 +20,14 @@ use RASP\RaspBundle\Entity\RaspberryRepository;
 
 class RaspController extends Controller
 {
+    public function listOrphanRaspAction()
+    {
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+        $listRasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->findBy(array("ufr" => NULL));
+
+        return $this->render("RASPRaspBundle:Rasp:listRasp.html.twig", array('listRasp' => $listRasp, 'loggedInUser' => $loggedInUser));
+    }
+
     public function showRaspAction($rasp_id,  Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();

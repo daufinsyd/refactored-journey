@@ -3,7 +3,6 @@
 namespace RASP\RComBundle\Controller;
 
 // Entities
-use RASP\RaspBundle\Entity\User;
 use RASP\RaspBundle\Entity\Raspberry;
 use RASP\RComBundle\Entity\RaspAction;
 
@@ -12,9 +11,7 @@ use RASP\RComBundle\Repository\RaspActionRepository;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
 // Serialization
@@ -29,23 +26,39 @@ class DefaultController extends Controller
         return $this->render('RComBundle:Default:index.html.twig');
     }
 
+    /* Say hello to the server and update info */
     public function whatsupAction(Request $request=null){
         if ($request != null) {
             $content = $request->getContent();
 
-            $id = $request->get('id');
+            // Get data
+            $uuid = $request->get('id');
             $status = $request->get('status');
             $info = $request->get('info');
             $shortLog = $request->get('shortLog');
 
-            $fs = new Filesystem();
-            $data = array("id" => $id, "info" => $info, "status" => $status, "shortLog" => $shortLog);
-            $json = json_encode($data);
-            $fs->dumpFile('/home/sydney_manjaro/tmp.json', $json);
+            // Get or create the rasp
+            $borne = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->findBy(array("uuid" => $uuid));
+            if(!$borne) {
+                // If doesn't already exist
+                $borne = new Raspberry();
+                $borne->setUuid($uuid);
+            }
+            else $borne = $borne[0];  // If already exist, then $born is an array (cf up), but uuid is unique so we get the unique element of the array
+            // Set / update data
+            $borne->setStatus($status);
+            $borne->setInfo($info);
+            $borne->setShortLog($shortLog);
+
+            // Save data
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($borne);
+            $em->flush();
         }
         return new Response(200);
     }
 
+    /* Retreive list of pending actions */
     public function imboredAction(Request $request = null){
         if ($request != null){
             // Get actionList
@@ -65,6 +78,7 @@ class DefaultController extends Controller
         }
     }
 
+    /* User delete an action of an specific rasp */
     public function deleteActionAction(Request $request, $rasp_id, $action_id)
     {
         if ($request != null) {
