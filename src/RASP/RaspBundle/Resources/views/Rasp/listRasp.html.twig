@@ -11,9 +11,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
 <div class="container">
     {% if listRasp[0].ufr %} {# Test whether template is used for listRasp or listOrphanRasp #}
-        <h1>Liste des bornes orphelines</h1>
-    {% else %}
         <h1>Liste des bornes votre UFR</h1>
+    {% else %}
+        <h1>Liste des bornes orphelines</h1>
     {% endif %}
     <table>
         <tr>
@@ -27,7 +27,9 @@
             <th>Info</th>
             <th>Volume maximal</th>
             <th>Éditer</th>
+            {% if listRasp[0].ufr %}
             <th>Contrôle</th>
+            {% endif %}
         </tr>
     {% for rasp in listRasp %}
         <tr>
@@ -60,11 +62,13 @@
                     <button class="btn btn-block btn-info">Editer</button>
                 </form>
             </th>
+            {% if rasp.ufr %}
             <th>
                 <form method="get" action="{{ path("rasp_listActions", {"rasp_id" : rasp.id}) }}">
                     <button class="btn btn-block btn-warning">Contrôler</button>
                 </form>
             </th>
+            {% endif %}
         </tr>
     {% endfor %}
     </table>
