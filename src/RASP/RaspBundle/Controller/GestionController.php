@@ -94,6 +94,7 @@ class GestionController extends Controller {
     }
 
 
+
     /* userPasswordAction ----------------------------------------------------------------------------------------------
      * Input :
      *   Request $request --> result got from page (e.g a form)
@@ -125,6 +126,7 @@ class GestionController extends Controller {
         }
         return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user, 'loggedInUser' => $loggedInUser));
     }
+
 
 
     /* editUserdAction -------------------------------------------------------------------------------------------------
@@ -166,24 +168,26 @@ class GestionController extends Controller {
     }
 
 
-    /* createUfrAction -------------------------------------------------------------------------------------------------
+
+    /* createUserAction ------------------------------------------------------------------------------------------------
      * Input :
      *   Request $request --> result got from page (e.g a form)
      * Output :
-     *   Redirection to a page depending on input.
+     *   Redirection to a page depending on input. Write a new user into the database.
      *
      * Desc :
-     *   Tries to create a new ufr. Form is valid implies redirection to
-     *   ufr main page, to ufr edition page otherwise.
+     *   Aims to create a new user through a form passed as an argument. Whenever the form is valid, the user is
+     *   created, redirection to the user edition page otherwise. Note : only an admin can create an user,
      * -------------------------------------------------------------------------------------------------------------- */
     public function createUserAction(Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        // adding an user requires admin rights
         if ($this->isGranted('ROLE_ADMIN')) {
-            // Create a new user
-            $user = new User();
-            // Auto generate a new password (should be set when on userfirst cinnexion via email link)
-            $user->setPlainPassword(random_bytes(10));
+
+            $user = new User(); // create an user
+            $user->setPlainPassword(random_bytes(10)); // with a random password
 
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
@@ -203,15 +207,15 @@ class GestionController extends Controller {
     }
 
 
-    /* createUfrAction -------------------------------------------------------------------------------------------------
+
+    /* deleteUserAction -------------------------------------------------------------------------------------------------
      * Input :
-     *   Request $request --> result got from page (e.g a form)
+     *  int $user_id --> the user's id we want to delete.
      * Output :
      *   Redirection to a page depending on input.
      *
      * Desc :
-     *   Tries to create a new ufr. Form is valid implies redirection to
-     *   ufr main page, to ufr edition page otherwise.
+     *   Tries to delete a given user.
      * -------------------------------------------------------------------------------------------------------------- */
     public function deleteUserAction($user_id)
     {
@@ -219,27 +223,33 @@ class GestionController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository("RASPRaspBundle:User")->find($user_id);
 
-        if($user && !($user->getId() == $loggedInUser->getId())){
-            $em->remove($user);
-            $em->flush();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            if ($user && !($user->getId() == $loggedInUser->getId())) {
+                $em->remove($user);
+                $em->flush();
+
+            }
+
+            $listUser = $em->getRepository("RASPRaspBundle:User")->findAll();
+            return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
+
+        } else {
+            throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
 
         }
-
-        $listUser = $em->getRepository("RASPRaspBundle:User")->findAll();
-        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
 
     }
 
 
-    /* createUfrAction -------------------------------------------------------------------------------------------------
+
+    /* userSuccessAction -----------------------------------------------------------------------------------------------
      * Input :
-     *   Request $request --> result got from page (e.g a form)
+     *   int $user_id --> the id the action refers to
      * Output :
-     *   Redirection to a page depending on input.
+     *   user success page.
      *
      * Desc :
-     *   Tries to create a new ufr. Form is valid implies redirection to
-     *   ufr main page, to ufr edition page otherwise.
+     *   Usually used when a successful action on the given user has been done.
      * -------------------------------------------------------------------------------------------------------------- */
     public function userSuccessAction($user_id) {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -248,28 +258,31 @@ class GestionController extends Controller {
     }
 
 
-    /* createUfrAction -------------------------------------------------------------------------------------------------
+
+    /* toggleUserAction -------------------------------------------------------------------------------------------------
      * Input :
-     *   Request $request --> result got from page (e.g a form)
+     *   int $user_id --> the id the action refers to
      * Output :
      *   Redirection to a page depending on input.
      *
      * Desc :
-     *   Tries to create a new ufr. Form is valid implies redirection to
-     *   ufr main page, to ufr edition page otherwise.
+     *   Enable or disable an user.
      * -------------------------------------------------------------------------------------------------------------- */
     public function toggleUserAction($user_id)
     {
-        // TODO: implement ROLE
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+
         if ($this->isGranted('ROLE_ADMIN')) {
             $user = $this->getDoctrine()->getRepository('RASPRaspBundle:User')->find($user_id);
             $em = $this->getDoctrine()->getManager();
+
             if ($user->isEnabled()) {
                 $user->setEnabled(false);
+
             } else {
                 $user->setEnabled(true);
             }
+
             $em->persist($user);
             $em->flush();
 
