@@ -38,7 +38,11 @@
             <th><a href="{{ path("rasp_showRasp", {'rasp_id' : rasp.id}) }}">{{ rasp.id }}</a></th>
             <th>{{ rasp.uuid }}</th>
             <th>{{ rasp.place }}</th>
+            {% if rasp.ufr %} {# Test whether template is used for listRasp or listOrphanRasp #}
             <th><a href="{{ path("admin_showUfr", {'ufr_id' : rasp.ufr.id}) }}">{{ rasp.ufr }}</a></th>
+            {% else %}
+                <th><a href="{{ path("rasp_listOrphan") }}">Aucune UFR</a></th>
+            {% endif %}
             <th>{{ rasp.info }}</th>
             <th><span
                 {% if rasp.maxVol <= 5 %}
@@ -58,7 +62,7 @@
             </th>
         </tr>
     </table>
-    CAL:
+
 
 </div>
 {% endblock %}
