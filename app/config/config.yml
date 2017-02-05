@@ -81,5 +81,17 @@ fos_user:
     firewall_name: main
     user_class: RASP\RaspBundle\Entity\User
 
+    from_email:
+        address: simon.vilmin@gmail.com
+        sender_name: moi
+
     service:
         mailer: fos_user.mailer.twig_swift
+
+    registration:
+        form:
+            type: RASP\RaspBundle\Form\User\UserType
+            name: rasp_user_registration_form
+        confirmation:
+            enabled: true
+            template: '@FOSUser/Registration/email.txt.twig'

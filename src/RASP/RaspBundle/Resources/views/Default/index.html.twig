@@ -5,26 +5,34 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>Gestion de la flotte de raspberry</h3>
-                <form method="get" action="{{ path('rasp_listRasp', {'ufr_id' : loggedInUser.ufr.id}) }}">
-                    <button class="btn btn-info">Voir les rasp</button>
-                </form>
-                <br/>
-                <form method="get" action="{{ path('user_editPassord', {'user_id' : loggedInUser.id}) }}">
-                    <button class="btn btn-info">change ton mdpd</button>
-                </form>
-                <br/>
-                <form method="get" action="{{ path('admin_showUfr', {'ufr_id' : loggedInUser.ufr.id}) }}">
-                    <button class="btn btn-info">liste des ufr</button>
-                </form>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <form method="get" action="{{ path('admin_homepage') }}">
-                        <button class="btn btn-success">Page d'admin bro</button>
-                    </form>
-                {% endif %}
+        <h3> Outil d'administration des bornes RCCF </h3>
+        <div class="row-main">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    Bonjour
+                </div>
+                <div class="col-sm-8">
+                    michel
+                </div>
             </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    Au revoir
+                </div>
+                <div class="col-sm-8">
+                    jeanne
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    adieu
+                </div>
+                <div class="col-sm-8">
+                    l'espoir
+                </div>
+            </div>
+
         </div>
     </div>
 

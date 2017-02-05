@@ -182,3 +182,7 @@ input.valid{
 	border-color: rgb(172, 37, 23);
 	border-width: 4px;
 }
+
+.row-main {
+	padding: 5% 15% 5% 15%;
+}

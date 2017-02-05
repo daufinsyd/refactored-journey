@@ -11,12 +11,15 @@ class DefaultController extends Controller
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->get('security.authorization_checker');
-        if ( $this->isGranted('ROLE_USER') or $this->isGranted('ROLE_ADMIN')) {
-            return $this->render('RASPRaspBundle:Default:index.html.twig', array('loggedInUser' => $loggedInUser));
-        }
-        else {
+        if ($securityContext->isGranted('ROLE_USER') or $securityContext->isGranted('ROLE_ADMIN')) {
+            //return $this->render('RASPRaspBundle:Default:index.html.twig', array('loggedInUser' => $loggedInUser));
+            return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $loggedInUser, 'loggedInUser' => $loggedInUser));
+
+        } else {
             return $this->redirect("/login");
+
         }
+
     }
 
     public function adminIndexAction()

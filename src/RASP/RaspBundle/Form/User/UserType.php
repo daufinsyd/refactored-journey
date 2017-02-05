@@ -19,9 +19,17 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
-class UserType extends AbstractType
+
+class UserType extends BaseType
 {
+
+    public function __construct($class = 'RASP\RaspBundle\Entity\User')
+    {
+        parent::__construct($class);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $listUfr = $options['listUfr'];
@@ -53,5 +61,9 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'listUfr' => null,
         ));
+    }
+
+    public function getName(){
+        return 'rasp_user_registration_form';
     }
 }

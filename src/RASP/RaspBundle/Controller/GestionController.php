@@ -30,6 +30,7 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+
 // envoyer lien de validation par mail
 
 /* class GestionController ---------------------------------------------------------------------------------------------
@@ -122,6 +123,7 @@ class GestionController extends Controller {
             $em->persist($user);
             $em->flush();
 
+
             return $this->redirectToRoute("admin_showUser", array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
         }
         return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user, 'loggedInUser' => $loggedInUser));
@@ -129,7 +131,7 @@ class GestionController extends Controller {
 
 
 
-    /* editUserdAction -------------------------------------------------------------------------------------------------
+    /* editUserAction -------------------------------------------------------------------------------------------------
      * Input :
      *   Request $request --> result got from page (e.g a form)
      *   int     $user_id --> the id the request refers to
@@ -137,14 +139,14 @@ class GestionController extends Controller {
      *   Redirection to a page depending on input.
      *
      * Desc :
-     *   Helps to change an user password. If data are valid, the new pass is submitted, reroute to user gesture
-     *   otherwise.
+     *   Helps to edit an user. Admin rights are required.
      * -------------------------------------------------------------------------------------------------------------- */
     public function editUserAction($user_id, Request $request)
     {
-        // Show specific user
+
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+
         if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
             $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
 
@@ -188,6 +190,7 @@ class GestionController extends Controller {
 
             $user = new User(); // create an user
             $user->setPlainPassword(random_bytes(10)); // with a random password
+            $user->setConfirmationToken('azerty');
 
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
@@ -198,7 +201,9 @@ class GestionController extends Controller {
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
+                // must send an email here
+                 $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+                // return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
             }
             // Same template as editUser
             return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));

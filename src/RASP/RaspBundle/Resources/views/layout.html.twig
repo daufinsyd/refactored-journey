@@ -38,19 +38,6 @@
     <li>
         <a class="navbar-brand navbar-right" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
     </li>
-    {#
-    {% set p_arr = {profile: 'Profile', users: 'Utilisateurs', group: 'Groupes'} %}
-    {% for key, item in p_arr %}
-        <li class=""nav-item active">
-            <a class="nav-link navbar-brand" href="{{ path(key) }}"> {{ item }} </a>
-        </li>
-    {% endfor %}
-    #}
-
-</ul>
-<ul class="nav navbar-nav navbar-right">
-    <li class="nav-item">Outil de Gestion</li>
-</ul>
 
 {% endblock %}
 
