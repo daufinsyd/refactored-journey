@@ -11,7 +11,7 @@ parameters:
     mailer_auth_mode: login
     mailer_host: smtp.gmail.com
     mailer_user: 'simon.vilmin@gmail.com'
-    mailer_password: '5by8pr64'
+    mailer_password: 'PASSWORD'
 
     secret: ThisTokenIsNotSoSecretChangeIt
     database_driver: pdo_sqlite
