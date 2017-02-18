@@ -32,6 +32,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 // envoyer lien de validation par mail
+// TODO: add controls !
 
 /**
  * Class GestionController, aims to handle user-oriented actions.

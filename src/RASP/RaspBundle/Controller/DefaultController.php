@@ -1,12 +1,28 @@
 <?php
-
+/**
+ *
+ */
 namespace RASP\RaspBundle\Controller;
 
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+
+/**
+ * Class DefaultController, handles login pages
+ */
 class DefaultController extends Controller
 {
+
+    /**
+     * Handles login page.
+     *
+     * Response to "/" route, if there exists a session, the user will be redirected on his page, to "/login"
+     * otherwise.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response Either a
+     * response to user page, or redirected to login.
+     */
     public function indexAction()
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -22,6 +38,11 @@ class DefaultController extends Controller
 
     }
 
+    /**
+     * Get admin page
+     *
+     * @return \Symfony\Component\HttpFoundation\Response The response containing the admin page.
+     */
     public function adminIndexAction()
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
