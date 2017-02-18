@@ -33,35 +33,21 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 // envoyer lien de validation par mail
 
-/* class GestionController ---------------------------------------------------------------------------------------------
- * Attributes :
+/**
+ * Class GestionController, aims to handle user-oriented actions.
  *
- * Methods :
- *     public usersAction()
- *     public userAction(int)  (beware of the difference user / users)
- *     public function userPasswordAction(int, Request)
- *     public function editUserAction(int, Request)
- *     public function createUserAction(Request)
- *     public function deleteUserAction(int)
- *     public function userSuccessAction(int)
- *     public function toggleUserAction(int)
- *
- * Description :
- *     Aims to handle user gesture, that is creation/display/deletion/update and so forth.
- *
---------------------------------------------------------------------------------------------------------------------- */
-
+ * Contains methods such as changing password, registration, view user parameters, and so forth. Details may be found
+ * in methods description, nevertheless, the use of mailing in createUserAction should be upgraded whenever possible,
+ * depending on FOSUser package's version.
+ */
 class GestionController extends Controller {
 
 
-    /* usersAction -------------------------------------------------------------------------------------------------
-     * Input :
-     * Output :
-     *   Redirection to a listing page.
+    /**
+     * Aims to display user pages.
      *
-     * Desc :
-     *   display the list of all known users with information such as their status, name, and so on.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * @return Response A page displaying users.
+     */
     public function usersAction(){
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser(); // get current user
         $listUser = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->findAll();
@@ -69,17 +55,20 @@ class GestionController extends Controller {
     }
 
 
-
-    /* userAction ------------------------------------------------------------------------------------------------------
-     * Input :
-     *   int $user_id --> id of an user we would like to have infos on.
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Accesses a specific user page.
      *
-     * Desc :
-     *   Aims to reroute on a specific user page. Depending on the access of the logged user, the function will
-     *   either redirect  on the required page, or throw an AccessDeniedException exception.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * The method will behave variously according to the rights granted to the given user, that is,
+     * will redirect to the required page if the given id refers to an admin or the user itself, or throw
+     * an exception otherwise.
+     *
+     * @param int $user_id An integer to identify a given user.
+     *
+     * @throws AccessDeniedException If the id does not correspond to an admin or the user required itself.
+     *
+     * @return Response The user (pointed out by $user_id) page.
+     *
+     */
     public function userAction($user_id)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -95,18 +84,17 @@ class GestionController extends Controller {
     }
 
 
-
-    /* userPasswordAction ----------------------------------------------------------------------------------------------
-     * Input :
-     *   Request $request --> result got from page (e.g a form)
-     *   int     $user_id --> the id the request refers to
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Changes password.
      *
-     * Desc :
-     *   Helps to change an user password. If data are valid, the new pass is submitted, reroute to user gesture
-     *   otherwise.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * Tries to change the password of a given user, through a form passed as a request. Actually redirects either to
+     * the user page if success, loops on the form otherwise.
+     *
+     * @param int $user_id An integer to identify a given user.
+     * @param Request $request The form containing information about password modification.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response The page to be redirected on.
+     */
     public function userPasswordAction($user_id, Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -130,17 +118,19 @@ class GestionController extends Controller {
     }
 
 
-
-    /* editUserAction -------------------------------------------------------------------------------------------------
-     * Input :
-     *   Request $request --> result got from page (e.g a form)
-     *   int     $user_id --> the id the request refers to
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Allows an admin user to modify a given user's information.
      *
-     * Desc :
-     *   Helps to edit an user. Admin rights are required.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * The modifications rely on a form to be submitted. Notice that a user must be granted admin rights or the user
+     * with the id $user_id itself to access such a feature. An exception will be thrown whenever it is not the case.
+     *
+     * @param int $user_id An integer to identify a given user.
+     * @param Request $request The form containing modifications.
+     *
+     * @throws AccessDeniedException If $user_id does neither match the current user nor an admin one.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response The page to be redirected on.
+     */
     public function editUserAction($user_id, Request $request)
     {
 
@@ -170,17 +160,24 @@ class GestionController extends Controller {
     }
 
 
-
-    /* createUserAction ------------------------------------------------------------------------------------------------
-     * Input :
-     *   Request $request --> result got from page (e.g a form)
-     * Output :
-     *   Redirection to a page depending on input. Write a new user into the database.
+    /**
+     * Creates an user.
      *
-     * Desc :
-     *   Aims to create a new user through a form passed as an argument. Whenever the form is valid, the user is
-     *   created, redirection to the user edition page otherwise. Note : only an admin can create an user,
-     * -------------------------------------------------------------------------------------------------------------- */
+     * Feature for admin only. Creates an user through a form to be filled, and sent so. Notice that trying to access
+     * the page would result in an exception if the current user has not the convenient rights. This method may send
+     * a confirmation mail to the new user, so that the so said user must activate his account through a link. Using
+     * sendConfirmationEmailMessage is probably not the most elegant way to call the mailer functionality of
+     * FOSUser, but according to RegistrationController (present in vendor/friendsofsymfony/Controller), there is no
+     * mailing function about register.
+     * Troubleshooting this issue could be done by trying to mix up the forms given by FOSUser with the needs of ours,
+     * even though the form used here has already been declared to be the default FOSUser one.
+     *
+     * @param Request $request Contains the form with new user credentials.
+     *
+     * @throws AccessDeniedException If the current user is not an admin.
+     *
+     * @return Response The user page in case of success, loop on the form otherwise.
+     */
     public function createUserAction(Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -212,16 +209,15 @@ class GestionController extends Controller {
     }
 
 
-
-    /* deleteUserAction -------------------------------------------------------------------------------------------------
-     * Input :
-     *  int $user_id --> the user's id we want to delete.
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Deletes an user.
      *
-     * Desc :
-     *   Tries to delete a given user.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * @param int $user_id An integer to identify a given user (to delete).
+     *
+     * @throws AccessDeniedException Thrown if the current user is not admin.
+     *
+     * @return Response Returns to the users list.
+     */
     public function deleteUserAction($user_id)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -246,16 +242,13 @@ class GestionController extends Controller {
     }
 
 
-
-    /* userSuccessAction -----------------------------------------------------------------------------------------------
-     * Input :
-     *   int $user_id --> the id the action refers to
-     * Output :
-     *   user success page.
+    /**
+     * Success resulting page.
      *
-     * Desc :
-     *   Usually used when a successful action on the given user has been done.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * @param int $user_id An integer to identify an user.
+     *
+     * @return Response A page resulting from a successful action.
+     */
     public function userSuccessAction($user_id) {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
@@ -263,16 +256,18 @@ class GestionController extends Controller {
     }
 
 
-
-    /* toggleUserAction -------------------------------------------------------------------------------------------------
-     * Input :
-     *   int $user_id --> the id the action refers to
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Enables an user.
      *
-     * Desc :
-     *   Enable or disable an user.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * Given an id, an admin (an admin only) user will be able to toggle or not an user. An exception will be thrown
+     * if the current user is not admin.
+     *
+     * @param int $user_id An integer to identify an user to enable/disable.
+     *
+     * @throws AccessDeniedException Thrown if the current user is not admin.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse Reroutes to success page previously defined.
+     */
     public function toggleUserAction($user_id)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
