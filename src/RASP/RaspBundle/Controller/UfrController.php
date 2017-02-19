@@ -24,36 +24,25 @@ use RASP\RaspBundle\Entity\Ufr;
 use RASP\RaspBundle\Entity\UfrRepository;
 
 
-
-
-/* class UfrController -------------------------------------------------------------------------------------------------
- * Attributes :
+/**
+ * Class UfrController, aims to handle ufr actions
  *
- * Methods :
- *    public createUfrAction(Request)
- *    public ufrsAction()
- *    public showUfrAction(int)
- *    public editUfrAction(int, request)
- *    public ufrDbUpdate(form, request)
- *
- * Description :
- *    Aims to handle Ufr entities gesture, that is, edit/create/show ufr.
- *
---------------------------------------------------------------------------------------------------------------------- */
-
+ * This class aims to provide functions to handle the UFR groups, with features such as editing an UFR, deletion,
+ * update, and so on.
+ */
 class UfrController extends Controller
 {
 
-    /* createUfrAction -------------------------------------------------------------------------------------------------
-     * Input :
-     *   Request $request --> result got from page (e.g a form)
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Creates an UFR.
      *
-     * Desc :
-     *   Tries to create a new ufr. Form is valid implies redirection to
-     *   ufr main page, to ufr edition page otherwise.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * Depending on the form submitted, the user will be redirected to the UFR list in case of success, and will
+     * loop on the form otherwise.
+     *
+     * @param Request $request the form to create an UFR.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response The resulting page.
+     */
     public function createUfrAction(Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -74,15 +63,11 @@ class UfrController extends Controller
     }
 
 
-
-    /* ufrsAction ------------------------------------------------------------------------------------------------------
-     * Input :
-     * Output :
-     *   Redirection to ufr main page (listing ufr).
+    /**
+     * Lists all UFRs.
      *
-     * Desc :
-     *   Get the list of all available ufr.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * @return Response The page containing a list of all UFRs.
+     */
     public function ufrsAction()
     {
         // list UFRs
@@ -92,16 +77,13 @@ class UfrController extends Controller
     }
 
 
-
-   /* showUfrAction ----------------------------------------------------------------------------------------------------
-    * Input :
-    *   int $ufr_id --> ufr identifier
-    * Output :
-    *   Redirection to the given ufr page.
-    *
-    * Desc :
-    *   Get available information about the selected ufr.
-    * --------------------------------------------------------------------------------------------------------------- */
+    /**
+     * Show a specific UFR.
+     *
+     * @param int $ufr_id An integer to identify an UFR.
+     *
+     * @return Response The resulting page.
+     */
     public function showUfrAction($ufr_id)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -117,17 +99,14 @@ class UfrController extends Controller
     }
 
 
-
-    /* editUfrAction ---------------------------------------------------------------------------------------------------
-     * Input :
-     *   int     $ufr_id  --> ufr identifier
-     *   Request $request --> information got from the page (e.g a form)
-     * Output :
-     *   Redirection to a page depending on input.
+    /**
+     * Changes an UFR.
      *
-     * Desc :
-     *   If valid form then redirection to the modified ufr page. Loop on the edition page otherwise.
-     * -------------------------------------------------------------------------------------------------------------- */
+     * @param int $ufr_id An integer to identify an UFR.
+     * @param Request $request The form containing modifications.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response The resulting page.
+     */
     public function editUfrAction($ufr_id, Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
