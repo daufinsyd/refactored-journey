@@ -3,6 +3,13 @@
 <title>Profile utilisateur - Édition</title>
 {% endblock %}
 
+{% form_theme form _self %}
+
+{% block submit_widget %}
+    <div class="submit_widget">
+        <input type="submit" id="form_save" class="btn btn-success" name="form[save]" value="Save"/>
+    </div>
+{% endblock %}
 
 {% block content %}
     {{ form_start(form) }}

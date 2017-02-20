@@ -4,14 +4,62 @@
     <title>Raspberry</title>
 {% endblock %}
 
+{% form_theme form _self %}
 
+{% block submit_widget %}
+    <div class="submit_widget">
+        <input type="submit" id="form_save" class="btn btn-success" name="form[save]" value="Save"/>
+    </div>
+{% endblock %}
 
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
 <div class="container">
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div class="container">
+        <div class="list-group">
+            <a class="list-group-item active"> Modification ou création d'une borne RCCF (raspberry) </a>
+            <a class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6"> Emplacement {# form_label(form.place) #} </div>
+                    <div class="col-sm-6"> {{ form_widget(form.place) }}</div>
+                </div>
+            </a>
+            <a class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6"> Statut  </div>
+                    <div class="col-sm-6"> {{ form_widget(form.status) }}</div>
+                </div>
+            </a>
+            <a class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6"> Informations </div>
+                    <div class="col-sm-6"> {{ form_widget(form.info) }}</div>
+                </div>
+            </a>
+            <a class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6"> Volume Max </div>
+                    <div class="col-sm-6"> {{ form_widget(form.maxVol) }}</div>
+                </div>
+            </a>
+            <a class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6"> UFR </div>
+                    <div class="col-sm-6"> {{ form_widget(form.ufr) }}</div>
+                </div>
+            </a>
+
+            <a class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6"> Validation </div>
+                    <div class="col-sm-6"> {{ form_widget(form.save) }} </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
     {{ form_end(form) }}
 </div>
 {% endblock %}
