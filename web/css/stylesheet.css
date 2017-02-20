@@ -68,25 +68,6 @@ img.img-center{
 
 }
 
-nav.navbar.navbar-fixed-top {
-	max-height: 200px;
-	background-color: rgb(127, 140, 141);
-
-}
-
-.navbar-brand{
-	color: rgb(52, 73, 94);
-
-}
-
-
-.navbar-brand:hover,
-.navbar-brand:focus {
-	transition: 0.5s;
-	color: rgb(230, 225, 235);
-	background-color: rgb(231, 76, 60);
-
-}
 
 .form-signin {
 	background-color: rgb(230, 230, 230);
@@ -163,26 +144,15 @@ input.valid{
 
 }
 
-.success{
-	padding: 2% 2% 2% 2%;
-	background-color: rgb(46, 204, 113);
-	color: rgb(15, 100, 60);
-	text-align : center;
-	border-radius: 3px;
-	border-color: rgb(19, 154, 76);
-	border-width: 4px;
-}
-
-.failure{
-	padding: 2% 2% 2% 2%;
-	background-color: rgb(231, 76, 60);
-	color: rgb(44, 62, 80);
-	text-align: center;
-	border-radius: 3px;
-	border-color: rgb(172, 37, 23);
-	border-width: 4px;
-}
-
 .row-main {
 	padding: 5% 15% 5% 15%;
+}
+
+/* Override bootstrap definitions */
+.panel > .panel-heading {
+    background-color: rgb(108, 122, 137);
+}
+
+.panel-primary {
+    border-color: rgb(108, 122, 137);
 }

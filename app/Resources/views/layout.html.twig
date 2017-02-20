@@ -10,7 +10,7 @@
 
         {% block Global_CSS %} {# bootstrap and general CSS files/stylesheets #}
             <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/layout-stylesheet.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/stylesheet.css') }}" />
         {% endblock %}
 
         {# place for specific stylesheets file #}
@@ -18,7 +18,7 @@
 
 
     <body>
-        <nav class="navbar navbar-rccf">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <a class="navbar-brand" href="/">
                 {# <img class="rccf-logo" src="{{ asset('RCCF-1.png') }}" /> #}
                 RCCF

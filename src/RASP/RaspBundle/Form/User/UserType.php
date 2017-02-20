@@ -37,7 +37,7 @@ class UserType extends BaseType
             ->add('username')
             ->add('email')
             ->add('status', null, array('required' => true))
-            ->add('rank', null, array('required' => true, 'label' => 'Garde'))
+            ->add('rank', null, array('required' => true, 'label' => 'Grade'))
             /*->add('ufr', ChoiceType::class, array(
                 'choices' => array(
                     'FST' => 0,
