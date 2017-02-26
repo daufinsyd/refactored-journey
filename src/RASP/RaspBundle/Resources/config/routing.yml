@@ -23,6 +23,13 @@ rasp_editRasp:
     requirements:
         rasp_id:  \d+
 
+rasp_deleteRasp:
+    path:   /rasp/deleteRasp/{rasp_id}
+    defaults:
+        _controller:  RASPRaspBundle:Rasp:deleteRasp
+    requirements:
+        rasp_id:  \d+
+
 rasp_listActions:
     path:   /rasp/showActions/{rasp_id}
     defaults:

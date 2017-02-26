@@ -5,6 +5,7 @@
 
 namespace RASP\RaspBundle\Controller;
 use RASP\RaspBundle\Form\User\RaspType;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -131,4 +132,27 @@ class RaspController extends Controller
 
     }
 
+
+    /**
+     *
+     *
+     */
+    public function deleteRaspAction($rasp_id){
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository("RASPRaspBundle:User")->find($loggedInUser->getId());
+
+        $rasp = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->find($rasp_id);
+
+        if ($this->isGranted('ROLE_ADMIN') || $user->getUfr() == $rasp->getUfr()) {
+            $em->remove($rasp);
+            $em->flush();
+
+            return $this->redirectToRoute("rasp_rasp_homepage");
+        }
+        else {
+            throw new AccessDeniedException("Vous n'avez pas les bonnes permissions");
+        }
+    }
 }
