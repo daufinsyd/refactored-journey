@@ -134,8 +134,14 @@ class RaspController extends Controller
 
 
     /**
+     * Deletes a rasp.
      *
+     * @param int $rasp_id An integer to identify a given rasp (to delete).
      *
+     * @throws AccessDeniedException Thrown if the current user is not admin or deoens't belong to the same ufr as the
+     * rasp's one.
+     *
+     * @return Response Returns to the main page.
      */
     public function deleteRaspAction($rasp_id){
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
