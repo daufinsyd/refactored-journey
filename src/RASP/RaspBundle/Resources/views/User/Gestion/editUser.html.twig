@@ -3,23 +3,84 @@
 <title>Profile utilisateur - Édition</title>
 {% endblock %}
 
+{% form_theme form _self %}
+
+{% block submit_widget %}
+    <div class="submit_widget">
+        <input type="submit" id="form_save" class="btn btn-success" name="form[save]" value="Save"/>
+    </div>
+{% endblock %}
 
 {% block content %}
+    {{ form_start(form) }}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
-            </div>
-            <div class="col-sm-4">
-                One of three columns
-            </div>
-            <div class="col-sm-4">
-                One of three columns
-            </div>
-        </div>
+       <div class="list-group">
+            <a class="list-group-item active"> Modification ou création d'un utilisateur </a>
+            <a class="list-group-item">
+               <div class="row">
+                   <div class="col-sm-6"> Login </div>
+                   <div class="col-sm-6"> {{ form_widget(form.username) }}</div>
+               </div>
+            </a>
+            <a class="list-group-item">
+               <div class="row">
+                   <div class="col-sm-6"> Adresse mail </div>
+                   <div class="col-sm-6"> {{ form_widget(form.email) }}</div>
+               </div>
+            </a>
+            <a class="list-group-item">
+               <div class="row">
+                   <div class="col-sm-6"> Statut </div>
+                   <div class="col-sm-6"> {{ form_widget(form.status) }}</div>
+               </div>
+            </a>
+            <a class="list-group-item">
+               <div class="row">
+                   <div class="col-sm-6"> Grade (Admin ou non) </div>
+                   <div class="col-sm-6"> {{ form_widget(form.rank) }}</div>
+               </div>
+            </a>
+            <a class="list-group-item">
+               <div class="row">
+                   <div class="col-sm-6"> UFR </div>
+                   <div class="col-sm-6"> {{ form_widget(form.ufr) }}</div>
+               </div>
+            </a>
+
+           <a class="list-group-item">
+               <div class="row">
+                   <div class="col-sm-6"> Validation </div>
+                   <div class="col-sm-6"> {{ form_widget(form.save) }} </div>
+               </div>
+           </a>
+
+       </div>
     </div>
+    {{ form_end(form) }}
 
 {% endblock %}
 
+{#
+        <a class="list-group-item">
+            <div class="row">
+                <div class="col-sm-6"> Login </div>
+                <div class="col-sm-6"> {{ form_widget(form.username) }}</div>
+            </div>
+        </a>
+        <a class="list-group-item">
+           <div class="row">
+               <div class="col-sm-6"> Adresse mail </div>
+               <div class="col-sm-6"> {{ form_widget(form.email) }}</div>
+           </div>
+        </a>
+        <a class="list-group-item">
+           <div class="row">
+               <div class="col-sm-6"> Statut </div>
+               <div class="col-sm-6"> {{ form_widget(form.status) }}</div>
+           </div>
+        </a>
+
+
+
+
+#}

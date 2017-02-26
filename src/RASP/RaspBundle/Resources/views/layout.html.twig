@@ -7,6 +7,7 @@
 {% block meta_info %}
     <title> Signin </title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-theme.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/stylesheet.css') }}" />
 
 {% endblock %}
 
@@ -36,21 +37,8 @@
 </ul>
 <ul class="nav navbar-nav navbar-right">
     <li>
-        <a class="navbar-brand navbar-right" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+        <a class="navbar-brand" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
     </li>
-    {#
-    {% set p_arr = {profile: 'Profile', users: 'Utilisateurs', group: 'Groupes'} %}
-    {% for key, item in p_arr %}
-        <li class=""nav-item active">
-            <a class="nav-link navbar-brand" href="{{ path(key) }}"> {{ item }} </a>
-        </li>
-    {% endfor %}
-    #}
-
-</ul>
-<ul class="nav navbar-nav navbar-right">
-    <li class="nav-item">Outil de Gestion</li>
-</ul>
 
 {% endblock %}
 

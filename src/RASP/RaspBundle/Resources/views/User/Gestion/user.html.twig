@@ -77,10 +77,11 @@
                             </button>
                         {% endif %}
                     </form>
+                    {% if not user.hasRole('ROLE_ADMIN') %}
                     <form class="user-form" method="get" action="{{ path('admin_deleteuser', {'user_id' : user.id})  }}">
                         <button class="btn btn-warning"> Supprimer </button>
-
                     </form>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

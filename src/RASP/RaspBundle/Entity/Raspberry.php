@@ -146,15 +146,6 @@ class Raspberry
     }
 
     /**
-     * @param mixed $uuid
-     */
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-    }
-
-
-    /**
      * @param mixed $info
      */
     public function setInfo($info)

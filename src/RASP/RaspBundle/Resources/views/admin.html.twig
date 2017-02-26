@@ -3,39 +3,79 @@
     <title>Administration du parc</title>
 {% endblock %}
 
-
-
 {% block content %}
     <div class="container">
+        <h3> Accès aux outils administrateur</h3>
+        <p> Cette page permet à un administrateur d'accéder à la gestion des bornes radios (raspberries), des
+        utilisateurs, et des UFR : </p>
+
+        <div class="panel-group">
+            {# Gestion des bornes -----------------------------------------------------------------  #}
+            <div class="panel panel-primary">
+                <div class="panel-heading"> Gestion des bornes </div>
+                <div class="panel-body"> Permet d'obtenir la liste des bornes, les modifier, en supprimer ... </div>
+                <table class = "table">
+                    <tr>
+                        <td>Un bouton </td>
+                        <td>Un autre </td>
+                    </tr>
+                </table>
+
         <div class="row">
             <div class="col-sm-4">
                 <h3>Gestion de la flotte de raspberry</h3>
                 <form method="get" action="{{ path('rasp_listOrphan') }}">
                     <button class="btn btn-info">Voir les bornes orphelines</button>
                 </form>
+
             </div>
-            <div class="col-sm-4">
-                <h3>Gestion des utilisateurs</h3>
-                <form method="get" action="{{ path('admin_users') }}">
-                    <button class="btn btn-info">Voir les utilisateurs</button>
-                </form>
-                <br/>
-                <form method="get" action="{{ path('admin_createUser') }}">
-                    <button class="btn btn-success">Créer un utilisateur</button>
-                </form>
+
+            {# Gestion des utilisateurs -----------------------------------------------------------------  #}
+            <div class="panel panel-primary">
+                <div class="panel-heading"> Gestion des utilisateurs </div>
+                <div class="panel-body"> Permet de créer un utilisateur, ou d'obtenir la liste de ceux-ci,
+                    afin de pouvoir les modifier
+                </div>
+                <table class = "table">
+                    <tr>
+                        <td>
+                            <form method="get" action="{{ path('admin_users') }}">
+                                <button class="btn btn-primary">Voir </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" action="{{ path('admin_createUser') }}">
+                                <button class="btn btn-success">Créer </button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-sm-4">
-                <h3>Gestion des Ufr</h3>
-                <form method="get" action="{{ path('admin_listUfrs') }}">
-                    <button class="btn btn-info">Voir les UFR</button>
-                </form>
-                <br/>
-                <form method="get" action="{{ path('admin_createUfr') }}">
-                    <button class="btn btn-success">Créer une UFR</button>
-                </form>
+
+            {# Gestion des UFR -----------------------------------------------------------------  #}
+            <div class="panel panel-primary">
+                <div class="panel-heading"> Gestion des UFR </div>
+                <div class="panel-body"> Permet d'obtenir la liste des UFR, en ajouter, en supprimer ... </div>
+                <table class = "table">
+                    <tr>
+                        <td>
+                            <form method="get" action="{{ path('admin_listUfrs') }}">
+                                <button class="btn btn-primary">Voir </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" action="{{ path('admin_createUfr') }}">
+                                <button class="btn btn-success">Créer </button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
+
+
     </div>
+
 
 {% endblock %}
 

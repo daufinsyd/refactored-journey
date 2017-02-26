@@ -30,27 +30,72 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class GestionController extends Controller {
-    // Actions for RCCF admin for users
 
+// envoyer lien de validation par mail
+// TODO: add controls !
+
+/**
+ * Class GestionController, aims to handle user-oriented actions.
+ *
+ * Contains methods such as changing password, registration, view user parameters, and so forth. Details may be found
+ * in methods description, nevertheless, the use of mailing in createUserAction should be upgraded whenever possible,
+ * depending on FOSUser package's version.
+ */
+class GestionController extends Controller {
+
+
+    /**
+     * Aims to display user pages.
+     *
+     * @return Response A page displaying users.
+     */
     public function usersAction(){
-        // List users
-        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser(); // get current user
         $listUser = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->findAll();
         return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
     }
 
+
+    /**
+     * Accesses a specific user page.
+     *
+     * The method will behave variously according to the rights granted to the given user, that is,
+     * will redirect to the required page if the given id refers to an admin or the user itself, or throw
+     * an exception otherwise.
+     *
+     * @param int $user_id An integer to identify a given user.
+     *
+     * @throws AccessDeniedException If the id does not correspond to an admin or the user required itself.
+     *
+     * @return Response The user (pointed out by $user_id) page.
+     *
+     */
     public function userAction($user_id)
     {
-        // Show specific user
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
-        $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+        $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id); // find user in database through Doctrine
+
+        // if user is granted with super_admin status, then he can access the required page
         if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
             return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
+
+        } else {
+            throw new AccessDeniedException("Vous n'avez pas les bonnes permissions");
         }
-        else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions");
     }
 
+
+    /**
+     * Changes password.
+     *
+     * Tries to change the password of a given user, through a form passed as a request. Actually redirects either to
+     * the user page if success, loops on the form otherwise.
+     *
+     * @param int $user_id An integer to identify a given user.
+     * @param Request $request The form containing information about password modification.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response The page to be redirected on.
+     */
     public function userPasswordAction($user_id, Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
@@ -59,23 +104,40 @@ class GestionController extends Controller {
         $form = $this->createForm(UserPasswdType::class, $user);
         $form->handleRequest($request);
 
+        // if the submitted form is valid
         if($form->isSubmitted() && $form->isValid()) {
-            //$user = $form->getData();
+            // get the new pass and update
             $user->setPlainPassword($form->get('password')->getData());
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
 
             return $this->redirectToRoute("admin_showUser", array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
         }
         return $this->render('RASPRaspBundle:User/Gestion:userPassword.html.twig', array('form' => $form->createView(), 'user' => $user, 'loggedInUser' => $loggedInUser));
     }
 
+
+    /**
+     * Allows an admin user to modify a given user's information.
+     *
+     * The modifications rely on a form to be submitted. Notice that a user must be granted admin rights or the user
+     * with the id $user_id itself to access such a feature. An exception will be thrown whenever it is not the case.
+     *
+     * @param int $user_id An integer to identify a given user.
+     * @param Request $request The form containing modifications.
+     *
+     * @throws AccessDeniedException If $user_id does neither match the current user nor an admin one.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response The page to be redirected on.
+     */
     public function editUserAction($user_id, Request $request)
     {
-        // Show specific user
+
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+
         if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
             $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
 
@@ -98,14 +160,35 @@ class GestionController extends Controller {
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
 
+
+    /**
+     * Creates an user.
+     *
+     * Feature for admin only. Creates an user through a form to be filled, and sent so. Notice that trying to access
+     * the page would result in an exception if the current user has not the convenient rights. This method may send
+     * a confirmation mail to the new user, so that the so said user must activate his account through a link. Using
+     * sendConfirmationEmailMessage is probably not the most elegant way to call the mailer functionality of
+     * FOSUser, but according to RegistrationController (present in vendor/friendsofsymfony/Controller), there is no
+     * mailing function about register.
+     * Troubleshooting this issue could be done by trying to mix up the forms given by FOSUser with the needs of ours,
+     * even though the form used here has already been declared to be the default FOSUser one.
+     *
+     * @param Request $request Contains the form with new user credentials.
+     *
+     * @throws AccessDeniedException If the current user is not an admin.
+     *
+     * @return Response The user page in case of success, loop on the form otherwise.
+     */
     public function createUserAction(Request $request)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        // adding an user requires admin rights
         if ($this->isGranted('ROLE_ADMIN')) {
-            // Create a new user
-            $user = new User();
-            // Auto generate a new password (should be set when on userfirst cinnexion via email link)
-            $user->setPlainPassword(random_bytes(10));
+
+            $user = new User(); // create an user
+            $user->setPlainPassword(random_bytes(10)); // with a random password
+            $user->setConfirmationToken('azerty');
 
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
@@ -116,7 +199,9 @@ class GestionController extends Controller {
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
+                // must send an email here
+                 $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+                // return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
             }
             // Same template as editUser
             return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
@@ -124,41 +209,81 @@ class GestionController extends Controller {
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
 
+
+    /**
+     * Deletes an user.
+     *
+     * @param int $user_id An integer to identify a given user (to delete).
+     *
+     * @throws AccessDeniedException Thrown if the current user is not admin.
+     *
+     * @return Response Returns to the users list.
+     */
     public function deleteUserAction($user_id)
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository("RASPRaspBundle:User")->find($user_id);
 
-        if($user && !($user->getId() == $loggedInUser->getId())){
-            $em->remove($user);
-            $em->flush();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            if ($user && !($user->getId() == $loggedInUser->getId())) {
+                $em->remove($user);
+                $em->flush();
+
+            }
+
+            $listUser = $em->getRepository("RASPRaspBundle:User")->findAll();
+            return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
+
+        } else {
+            throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
 
         }
 
-        $listUser = $em->getRepository("RASPRaspBundle:User")->findAll();
-        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
-
     }
 
+
+    /**
+     * Success resulting page.
+     *
+     * @param int $user_id An integer to identify an user.
+     *
+     * @return Response A page resulting from a successful action.
+     */
     public function userSuccessAction($user_id) {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
         return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
     }
 
+
+    /**
+     * Enables an user.
+     *
+     * Given an id, an admin (an admin only) user will be able to toggle or not an user. An exception will be thrown
+     * if the current user is not admin.
+     *
+     * @param int $user_id An integer to identify an user to enable/disable.
+     *
+     * @throws AccessDeniedException Thrown if the current user is not admin.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse Reroutes to success page previously defined.
+     */
     public function toggleUserAction($user_id)
     {
-        // TODO: implement ROLE
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+
         if ($this->isGranted('ROLE_ADMIN')) {
             $user = $this->getDoctrine()->getRepository('RASPRaspBundle:User')->find($user_id);
             $em = $this->getDoctrine()->getManager();
+
             if ($user->isEnabled()) {
                 $user->setEnabled(false);
+
             } else {
                 $user->setEnabled(true);
             }
+
             $em->persist($user);
             $em->flush();
 
