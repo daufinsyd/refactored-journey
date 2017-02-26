@@ -20,6 +20,14 @@
                         <td>Un autre </td>
                     </tr>
                 </table>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Gestion de la flotte de raspberry</h3>
+                <form method="get" action="{{ path('rasp_listOrphan') }}">
+                    <button class="btn btn-info">Voir les bornes orphelines</button>
+                </form>
+
             </div>
 
             {# Gestion des utilisateurs -----------------------------------------------------------------  #}

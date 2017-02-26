@@ -114,14 +114,6 @@ class Raspberry
     }
 
     /**
-     * @param mixed $uuid
-     */
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-    }
-
-    /**
      * @return mixed
      */
     public function getPlace()
