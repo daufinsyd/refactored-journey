@@ -22,6 +22,7 @@
             <th>Volume maximal</th>
             <th>Éditer</th>
             <th>Contrôle</th>
+            <th>Suppression</th>
         </tr>
         <tr>
             <th>
@@ -58,6 +59,12 @@
             <th>
                 <form method="get" action="{{ path("rasp_listActions", {"rasp_id" : rasp.id}) }}">
                     <button class="btn btn-block btn-warning">Contrôler</button>
+                </form>
+            </th>
+            <th>
+                <form method="get" action="{{ path("rasp_deleteRasp", {"rasp_id" : rasp.id}) }}">
+                    <button  onclick="return confirm('Souhaitez-vous supprimer définitivement cette borne ?')
+                        " class="btn btn-block btn-danger">Supprimer</button>
                 </form>
             </th>
         </tr>
