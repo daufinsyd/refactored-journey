@@ -16,18 +16,18 @@
                 <div class="panel-body"> Permet d'obtenir la liste des bornes, les modifier, en supprimer ... </div>
                 <table class = "table">
                     <tr>
-                        <td>Un bouton </td>
-                        <td>Un autre </td>
+                        <td>
+                            <form method="get" action="{{ path('rasp_listOrphan') }}">
+                                <button class="btn btn-primary">Voir les bornes orphelines</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" action="{{ path('admin_listUfrs') }}">
+                                <button class="btn btn-primary">Voir par UFR</button>
+                            </form>
+                        </td>
                     </tr>
                 </table>
-
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Gestion de la flotte de raspberry</h3>
-                <form method="get" action="{{ path('rasp_listOrphan') }}">
-                    <button class="btn btn-info">Voir les bornes orphelines</button>
-                </form>
-
             </div>
 
             {# Gestion des utilisateurs -----------------------------------------------------------------  #}
