@@ -19,15 +19,38 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+/**
+ * Class DefaultController
+ *
+ * This controller aims to process the connection between the raspberries and the server with actions such as
+ * get information, get pending actions, and so forth.
+ */
 class DefaultController extends Controller
 {
+    /**
+     * Aims to display main communication page.
+     *
+     * @return Response The required page.
+     */
     public function indexAction()
     {
         return $this->render('RComBundle:Default:index.html.twig');
     }
 
-    /* Say hello to the server and update info */
-    public function whatsupAction(Request $request=null){
+
+    /**
+     * Say hello to the server and update info.
+     *
+     * This function is used whenever a rasp needs to identify itself to the server. It is also useful for an update
+     * of informations such as the rasp status. If the server does not recognize the sender of the request, it tries
+     * to add it as a new raspberry. Otherwise the server will find it by looking for the uuid which is unique right
+     * into the Raspberry table.
+     *
+     * @param Request|null $request the request coming from a born.
+     *
+     * @return Response the response to be sent to the born.
+     */
+    public function whatsupAction(Request $request = null){
         if ($request != null) {
             $content = $request->getContent();
 
@@ -58,8 +81,19 @@ class DefaultController extends Controller
         return new Response(200);
     }
 
-    /* Retreive list of pending actions */
+    /**
+     * Retrieve list of pending actions.
+     *
+     * This function send to an asking rasp the list of pending actions it has to fulfill. The response is sent as
+     * a JSON response, to be handled by a python program on the client-side (rasp-side). The JSON contains all the
+     * actions serialized from the action database.
+     *
+     * @param Request|null $request A request from a machine waiting for its action to perform.
+     *
+     * @return Response The response containing the actions.
+     */
     public function imboredAction(Request $request = null){
+
         if ($request != null){
             // Get actionList
             $uuid = $request->get('uuid');
@@ -78,7 +112,21 @@ class DefaultController extends Controller
         }
     }
 
-    /* User delete an action of an specific rasp */
+    /**
+     * User delete an action of an specific rasp
+     *
+     * As a rasp belongs to a particular ufr, just an user of the same ufr can access to actions such as delete an
+     * action. As a consequence, an user of a different ufr may be thrown with an AccessDeniedException. On the
+     * other case, the deletion can be accessed.
+     *
+     * @param Request $request the request sent to get the page.
+     * @param $rasp_id An integer to identify a raspberry to modify.
+     * @param $action_id An integer to identify the action to be deleted.
+     *
+     * @throws AccessDeniedException Occurs whenever an user does not belong to another ufr.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteActionAction(Request $request, $rasp_id, $action_id)
     {
         if ($request != null) {
@@ -98,6 +146,18 @@ class DefaultController extends Controller
         }
     }
 
+    /**
+     * Send a message to a raspberry to reboot.
+     *
+     * This function will throw an exception whenever an user from a wrong ufr tries to access it.
+     *
+     * @param Request $request the request of the page.
+     * @param $rasp_id An integer to identify the id to reboot.
+     *
+     * @throws AccessDeniedException An user may not be able to access this page if it does not belong to the rasp' ufr.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse  redirect to the rasp page.
+     */
     public function rebootPlzAction(Request $request, $rasp_id){
         if ($request != null) {
             $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
