@@ -23,3 +23,8 @@
 
 #bd
 app/data/*.sqlite
+
+
+# Symfony and composer
+composer.lock
+vendor/
