@@ -22,21 +22,21 @@
             </tr>
             <tr>
                 <td>
-                    <form method="get" action="">
+                    <form method="get" action="{{ path("r_com_updatePlz", {'rasp_id' : rasp_id}) }}">
                         <button class="btn btn-info">Mettre à jour</button>
                     </form>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form method="get" action="">
+                    <form method="get" action="{{ path("r_com_upgradePlz", {'rasp_id' : rasp_id}) }}">
                         <button class="btn btn-warning">Mettre à niveau</button>
                     </form>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form method="get" action="">
+                    <form method="get" action="{{ path("r_com_personalPlz", {'rasp_id' : rasp_id}) }}">
                         <button class="btn btn-success">Effectuer une nouvelle action personnalisée</button>
                     </form>
                 </td>
@@ -65,14 +65,14 @@
                             Système
                         {% endif %}
                     </th>
-                    <th>{% if action.codeCmd > 0 %}
-                            {% if action.codeCmd == 1 %}
+                    <th>{% if action.Cmd > 0 %}
+                            {% if action.Cmd == 1 %}
                                 Rafraîchissement des paquets
-                            {% elseif action.codeCmd == 2 %}
+                            {% elseif action.Cmd == 3 %}
                                 Mise à jour
-                            {% elseif action.codeCmd == 3 %}
+                            {% elseif action.Cmd == 2 %}
                                 Mise à niveau
-                            {% elseif action.codeCmd == 10 %}
+                            {% elseif action.Cmd == 10 %}
                                 Redémarrage
                             {% endif %}
                         {% else %}

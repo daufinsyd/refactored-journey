@@ -159,14 +159,30 @@ class DefaultController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse  redirect to the rasp page.
      */
     public function rebootPlzAction(Request $request, $rasp_id){
+        return $this->GenericFunction($request, $rasp_id, 1, 10);
+    }
+
+    public function upgradePlzAction(Request $request, $rasp_id){
+        return $this->GenericFunction($request, $rasp_id, 1, 2);
+    }
+
+    public function updatePlzAction(Request $request, $rasp_id){
+        return $this->GenericFunction($request, $rasp_id, 2, 3);
+    }
+
+    public function personalPlzAction(Request $request, $rasp_id){
+        return $this->GenericFunction($request, $rasp_id, 1, 10);
+    }
+
+    public function GenericFunction(Request $request, $rasp_id, $codeCmd, $Cmd){
         if ($request != null) {
             $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
             $rasp = $this->getDoctrine()->getRepository('RASPRaspBundle:Raspberry')->find($rasp_id);
 
             if($rasp->getUfr() == $loggedInUser->getUfr()){
                 $newAction = new RaspAction();
-                $newAction->setCodeCmd(1);
-                $newAction->setCmd(10);
+                $newAction->setCodeCmd($codeCmd);
+                $newAction->setCmd($Cmd);
                 $newAction->setRasp($rasp);
 
                 $em = $this->getDoctrine()->getManager();
@@ -178,5 +194,6 @@ class DefaultController extends Controller
 
             throw $this->createAccessDeniedException('Vous n\'avez pas les droits appropriés pour effectuer une telle action!');
         }
+
     }
 }

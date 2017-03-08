@@ -18,10 +18,30 @@ r_com_deleteAction:
         rasp_id:    \d+
         action_id:  \d+
 
-
 r_com_rebootPlz:
     path:     /wthit/rebootPlz/{rasp_id}
     defaults:
         _controller:    RComBundle:Default:rebootPlz
+    requirements:
+        rasp_id:  \d+
+
+r_com_updatePlz:
+    path:    /wthit/updatePlz/{rasp_id}
+    defaults:
+        _controller:    RComBundle:Default:updatePlz
+    requirements:
+        rasp_id:  \d+
+
+r_com_upgradePlz:
+    path:    /wthit/upgradePlz/{rasp_id}
+    defaults:
+        _controller:    RComBundle:Default:upgradePlz
+    requirements:
+        rasp_id:  \d+
+
+r_com_personalPlz:
+    path:    /wthit/personalPlz/{rasp_id}
+    defaults:
+        _controller:    RComBundle:Default:personalPlz
     requirements:
         rasp_id:  \d+
