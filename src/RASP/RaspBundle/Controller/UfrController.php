@@ -7,6 +7,7 @@
  */
 
 namespace RASP\RaspBundle\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -125,6 +126,20 @@ class UfrController extends Controller
 
         return $this->render("RASPRaspBundle:Ufr:editUfr.html.twig", array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
 
+    }
+
+    public function deleteUfrAction($ufr_id, Request $request){
+        $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
+        $ufr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->find($ufr_id);
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($ufr);
+            $em->flush();
+
+            return $this->redirectToRoute("admin_listUfrs");
+        }
+        else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
 
 }

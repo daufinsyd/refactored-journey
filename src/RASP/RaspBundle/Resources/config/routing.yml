@@ -123,3 +123,10 @@ admin_editUfr:
         _controller:  RASPRaspBundle:Ufr:editUfr
     requirements:
         ufr_id: \d+
+
+admin_deleteUfr:
+    path:   /admin_/deleteUfr/{ufr_id}
+    defaults:
+        _controller:  RASPRaspBundle:Ufr:deleteUfr
+    requirements:
+        ufr_id: \d+

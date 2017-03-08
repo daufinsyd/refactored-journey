@@ -17,6 +17,9 @@
                 <form method="get" action="{{ path('admin_editUfr', {'ufr_id': ufr.id} ) }}">
                     <button class="btn btn-info">Éditer le nom</button>
                 </form>
+                <form method="get" action="{{ path('admin_deleteUfr', {'ufr_id': ufr.id} ) }}">
+                    <button class="btn btn-danger">Supprimer l'UFR</button>
+                </form>
                 {% endif %}
             </div>
             <div class="col-sm-4">
