@@ -41,7 +41,11 @@
                 </tr>
                 <tr>
                     <td class="col-md-6"> UFR </td>
-                    <td class="col-md-6"> <a href="{{ path('admin_showUfr', {'ufr_id' : user.ufr.id}) }}">{{ user.ufr }}</a> </td>
+                    {% if user.ufr %}
+                        <td class="col-md-6"> <a href="{{ path('admin_showUfr', {'ufr_id' : user.ufr.id}) }}">{{ user.ufr }}</a> </td>
+                    {% else %}
+                        <td class="col-md-6"> Aucune UFR </td>
+                    {% endif %}
                 </tr>
 
             </tbody>

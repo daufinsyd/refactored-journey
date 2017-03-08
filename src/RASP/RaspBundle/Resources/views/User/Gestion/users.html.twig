@@ -30,7 +30,14 @@
             </th>
             <th>{{ user.id }}</th>
             <th><a href="{{ path("admin_showUser", {'user_id' : user.id}) }}">{{ user.username }}</a></th>
-            <th>{{ user.ufr }}</th>
+            <th>
+                {% if user.ufr %}
+                    {{ user.ufr }}
+                {% else %}
+                    Aucune
+                {% endif %}
+            </th>
+
             <th>{{ user.status }}</th>
             <th>{{ user.rank }}</th>
         </tr>

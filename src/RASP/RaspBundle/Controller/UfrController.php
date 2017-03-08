@@ -134,6 +134,19 @@ class UfrController extends Controller
 
         if ($this->isGranted('ROLE_ADMIN')) {
             $em = $this->getDoctrine()->getManager();
+
+            $users = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->findBy(array("ufr" => $ufr));
+            foreach ($users as $user) {
+                $user->setUfr(NULL);
+                $em->persist($user);
+            }
+
+            $rasps = $this->getDoctrine()->getRepository("RASPRaspBundle:Raspberry")->findBy(array("ufr" => $ufr));
+            foreach ($rasps as $rasp) {
+                $rasp->setUfr(NULL);
+                $em->persist($rasp);
+            }
+
             $em->remove($ufr);
             $em->flush();
 
