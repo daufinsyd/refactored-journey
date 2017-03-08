@@ -5,14 +5,10 @@ parameters:
     database_name: db.sqlite
     database_user: root
     database_password: null
-
     mailer_transport: gmail
-    mailer_encryption: ssl
-    mailer_auth_mode: login
     mailer_host: smtp.gmail.com
-    mailer_user: 'simon.vilmin@gmail.com'
-    mailer_password: 'PASSWORD'
-
+    mailer_user: simon.vilmin@gmail.com
+    mailer_password: PASSWORD
     secret: ThisTokenIsNotSoSecretChangeIt
     database_driver: pdo_sqlite
     database_path: '%kernel.root_dir%/data/db.sqlite'
