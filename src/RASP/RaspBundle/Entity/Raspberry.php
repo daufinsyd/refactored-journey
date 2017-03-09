@@ -36,12 +36,12 @@ class Raspberry
     protected $status=-1;
 
     /**
-     * @ORM\Column(name="place", type="string", length=255)
+     * @ORM\Column(name="place", type="string", length=255, nullable=true)
      */
     protected $place="";
 
     /**
-     * @ORM\Column(name="info", type="string", length=255)
+     * @ORM\Column(name="info", type="string", length=255, nullable=true)
      */
     protected $info="";
 
@@ -51,12 +51,12 @@ class Raspberry
     protected $maxVol=100;
 
     /**
-     * @ORM\Column(name="scheduleFile", type="text")
+     * @ORM\Column(name="scheduleFile", type="text", nullable=true)
      */
     protected $scheduleFile="";
 
     /**
-     * @ORM\Column(name="shortLog", type="text")
+     * @ORM\Column(name="shortLog", type="text", nullable=true)
      */
     protected $shortLog="";
 
@@ -112,6 +112,15 @@ class Raspberry
     {
         $this->id = $id;
     }
+
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+    }
+
 
     /**
      * @return mixed
