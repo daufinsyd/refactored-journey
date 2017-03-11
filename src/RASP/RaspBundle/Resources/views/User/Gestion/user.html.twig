@@ -88,14 +88,14 @@
                             </button>
                         {% endif %}
                     </form>
-                    {% if user != loggedInUser and nbOfAdmins > 1 %}
+                    {% if user != loggedInUser and (nbOfAdmins > 1 or user.hasRole('ROLE_USER')) %}
                         {# Admin cannot delete itself and ensures that there is always at least one admin #}
                         <form class="user-form" method="get" action="{{ path('admin_deleteuser', {'user_id' : user.id})  }}">
                             <button class="btn btn-danger"> Supprimer </button>
                         </form>
                     {% else %}
                         <div class="alert alert-info alert-block">Vous ne pouvez pas <span style="font-weight: bold">
-                            supprimer</span> votre propre compte.</div>
+                            supprimer</span> ce compte.</div>
                     {% endif %}
                 {% endif %}
             </div>

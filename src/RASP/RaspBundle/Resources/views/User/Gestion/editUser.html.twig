@@ -33,7 +33,7 @@
                <a class="list-group-item">
                    <div class="row">
                        <div class="col-sm-6"> Administrateur RCCF </div>
-                       {% if userId != loggedInUser.getID() or nbOfAdmins > 1 %}
+                       {% if userId != loggedInUser.getId() or nbOfAdmins > 1 %}
                            {# If there is another admin or the current user is not the last admin, ADMIN can be changed #}
                            <div class="col-sm-6">{{ form_widget(form.super_admin) }}</div>
                        {% else %}
@@ -61,28 +61,3 @@
     {{ form_end(form) }}
 
 {% endblock %}
-
-{#
-        <a class="list-group-item">
-            <div class="row">
-                <div class="col-sm-6"> Login </div>
-                <div class="col-sm-6"> {{ form_widget(form.username) }}</div>
-            </div>
-        </a>
-        <a class="list-group-item">
-           <div class="row">
-               <div class="col-sm-6"> Adresse mail </div>
-               <div class="col-sm-6"> {{ form_widget(form.email) }}</div>
-           </div>
-        </a>
-        <a class="list-group-item">
-           <div class="row">
-               <div class="col-sm-6"> Statut </div>
-               <div class="col-sm-6"> {{ form_widget(form.status) }}</div>
-           </div>
-        </a>
-
-
-
-
-#}
