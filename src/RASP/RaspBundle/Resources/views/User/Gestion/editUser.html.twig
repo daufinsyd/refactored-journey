@@ -28,25 +28,21 @@
                    <div class="col-sm-6"> {{ form_widget(form.email) }}</div>
                </div>
             </a>
-            <a class="list-group-item">
-               <div class="row">
-                   <div class="col-sm-6"> Statut </div>
-                   <div class="col-sm-6"> {{ form_widget(form.status) }}</div>
-               </div>
-            </a>
-            <a class="list-group-item">
-               <div class="row">
-                   <div class="col-sm-6"> Grade (Admin ou non) </div>
-                   <div class="col-sm-6"> {{ form_widget(form.rank) }}</div>
-               </div>
-            </a>
-            <a class="list-group-item">
-               <div class="row">
-                   <div class="col-sm-6"> UFR </div>
-                   <div class="col-sm-6"> {{ form_widget(form.ufr) }}</div>
-               </div>
-            </a>
-
+           {# Admin only #}
+           {% if is_granted('ROLE_ADMIN') %}
+               <a class="list-group-item">
+                   <div class="row">
+                       <div class="col-sm-6"> Administrateur RCCF </div>
+                       <div class="col-sm-6"> {{ form_widget(form.super_admin) }}</div>
+                   </div>
+               </a>
+                <a class="list-group-item">
+                   <div class="row">
+                       <div class="col-sm-6"> UFR </div>
+                       <div class="col-sm-6"> {{ form_widget(form.ufr) }}</div>
+                   </div>
+                </a>
+            {% endif %}
            <a class="list-group-item">
                <div class="row">
                    <div class="col-sm-6"> Validation </div>

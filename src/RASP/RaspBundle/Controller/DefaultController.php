@@ -27,9 +27,13 @@ class DefaultController extends Controller
     {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $securityContext = $this->get('security.authorization_checker');
+
+        $nbOfAdmins = count($this->getDoctrine()->getRepository("RASPRaspBundle:User")->findByRoles("ROLE_ADMIN"));
+
         if ($securityContext->isGranted('ROLE_USER') or $securityContext->isGranted('ROLE_ADMIN')) {
             //return $this->render('RASPRaspBundle:Default:index.html.twig', array('loggedInUser' => $loggedInUser));
-            return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $loggedInUser, 'loggedInUser' => $loggedInUser));
+            return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $loggedInUser,
+                'loggedInUser' => $loggedInUser, 'nbOfAdmins' => $nbOfAdmins));
 
         } else {
             return $this->redirect("/login");

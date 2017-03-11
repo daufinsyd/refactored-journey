@@ -16,8 +16,7 @@
             <th>ID</th>
             <th>Nom</th>
             <th>UFR</th>
-            <th>Statut</th>
-            <th>Grade</th>
+            <th>Administtrateur RCCF ({{ nbOfAdmins }})</th>
         </tr>
     {% for user in listUser %}
         <tr>
@@ -38,8 +37,13 @@
                 {% endif %}
             </th>
 
-            <th>{{ user.status }}</th>
-            <th>{{ user.rank }}</th>
+            <th class="col-md-6">
+                {% if user.hasRole('ROLE_ADMIN') %}
+                    <input type="checkbox" checked onclick="return false;">
+                {% else %}
+                    <input type="checkbox" onclick="return false;">
+                {% endif %}
+            </th>
         </tr>
     {% endfor %}
     </table>
