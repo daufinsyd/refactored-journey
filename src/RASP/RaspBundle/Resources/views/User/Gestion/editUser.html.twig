@@ -28,25 +28,27 @@
                    <div class="col-sm-6"> {{ form_widget(form.email) }}</div>
                </div>
             </a>
-            <a class="list-group-item">
-               <div class="row">
-                   <div class="col-sm-6"> Statut </div>
-                   <div class="col-sm-6"> {{ form_widget(form.status) }}</div>
-               </div>
-            </a>
-            <a class="list-group-item">
-               <div class="row">
-                   <div class="col-sm-6"> Grade (Admin ou non) </div>
-                   <div class="col-sm-6"> {{ form_widget(form.rank) }}</div>
-               </div>
-            </a>
-            <a class="list-group-item">
-               <div class="row">
-                   <div class="col-sm-6"> UFR </div>
-                   <div class="col-sm-6"> {{ form_widget(form.ufr) }}</div>
-               </div>
-            </a>
+           {# Admin only #}
+           {% if is_granted('ROLE_ADMIN') %}
+               <a class="list-group-item">
+                   <div class="row">
+                       <div class="col-sm-6"> Administrateur RCCF </div>
+                       {% if userId != loggedInUser.getID() or nbOfAdmins > 1 %}
+                           {# If there is another admin or the current user is not the last admin, ADMIN can be changed #}
+                           <div class="col-sm-6">{{ form_widget(form.super_admin) }}</div>
+                       {% else %}
+                           <div class="col-sm-6 alert alert-block alert-warning">Vous êtes le dernier administrateur.</div>
+                       {% endif %}
 
+                   </div>
+               </a>
+                <a class="list-group-item">
+                   <div class="row">
+                       <div class="col-sm-6"> UFR </div>
+                       <div class="col-sm-6"> {{ form_widget(form.ufr) }}</div>
+                   </div>
+                </a>
+            {% endif %}
            <a class="list-group-item">
                <div class="row">
                    <div class="col-sm-6"> Validation </div>
