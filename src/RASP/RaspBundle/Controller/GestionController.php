@@ -249,7 +249,7 @@ class GestionController extends Controller {
 
             $nbOfAdmins = count($this->getDoctrine()->getRepository('RASPRaspBundle:User')->findByRoles('ROLE_ADMIN'));
             // Same template as editUser, except for userId. userId is set to -1 to allow user creation, it will fail
-            // otherwise
+            // otherwise.
             return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser,
                 'nbOfAdmins' => $nbOfAdmins, 'userId' => -1));
         }
