@@ -74,9 +74,14 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <form class="user-form" method="get" action="{{ path('admin_toggleUser', {'user_id' : user.id}) }}">
                         {% if user.enabled %}
-                            <button class="btn btn-warning">
-                                Désactiver
-                            </button>
+                            {% if user == loggedInUser %}
+                                <div class="alert alert-info alert-block">Vous ne pouvez pas
+                                    <span style="font-weight: bold">désactiver</span> votre propre compte.</div>
+                            {% else %}
+                                <button class="btn btn-warning">
+                                    Désactiver
+                                </button>
+                            {% endif %}
                         {% else %}
                             <button class="btn btn-success">
                                 Activer
@@ -88,6 +93,9 @@
                         <form class="user-form" method="get" action="{{ path('admin_deleteuser', {'user_id' : user.id})  }}">
                             <button class="btn btn-danger"> Supprimer </button>
                         </form>
+                    {% else %}
+                        <div class="alert alert-info alert-block">Vous ne pouvez pas <span style="font-weight: bold">
+                            supprimer</span> votre propre compte.</div>
                     {% endif %}
                 {% endif %}
             </div>
