@@ -146,11 +146,13 @@ class GestionController extends Controller {
 
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+        $userId = $user->getId();
 
-        if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
+        if ($userId == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
             $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
+            $isSuperAdmin = $user->hasRole('ROLE_ADMIN');
 
-            $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr));
+            $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr, 'super_admin' => $isSuperAdmin));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -186,8 +188,10 @@ class GestionController extends Controller {
 
                 return $this->redirectToRoute('admin_showUser', array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
             }
+            $nbOfAdmins = count($this->getDoctrine()->getRepository('RASPRaspBundle:User')->findByRoles('ROLE_ADMIN'));
 
-            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(),
+                'loggedInUser' => $loggedInUser, 'nbOfAdmins' => $nbOfAdmins, 'userId' => $userId));
         }
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }

@@ -33,7 +33,13 @@
                <a class="list-group-item">
                    <div class="row">
                        <div class="col-sm-6"> Administrateur RCCF </div>
-                       <div class="col-sm-6"> {{ form_widget(form.super_admin) }}</div>
+                       {% if userId != loggedInUser.getID() or nbOfAdmins > 1 %}
+                           {# If there is another admin or the current user is not the last admin, ADMIN can be changed #}
+                           <div class="col-sm-6">{{ form_widget(form.super_admin) }}</div>
+                       {% else %}
+                           <div class="col-sm-6 alert alert-block alert-warning">Vous êtes le dernier administrateur.</div>
+                       {% endif %}
+
                    </div>
                </a>
                 <a class="list-group-item">

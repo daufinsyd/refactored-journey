@@ -34,12 +34,14 @@ class UserType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $listUfr = $options['listUfr'];
+        $isSuperAdmin = $options['super_admin'];
         $builder
             ->add('username')
             ->add('email')
             ->add('super_admin', CheckboxType::class, array(
                 'mapped' => false,  // because non-entiity field
-                'required' => false  // allow not checked
+                'required' => false,  // allow not checked
+                'data' => $isSuperAdmin,
             ))
             ->add('ufr', null, array(
                     'class' => 'RASP\RaspBundle\Entity\Ufr',
@@ -54,6 +56,7 @@ class UserType extends BaseType
     {
         $resolver->setDefaults(array(
             'listUfr' => null,
+            'super_admin' => false,
         ));
     }
 
