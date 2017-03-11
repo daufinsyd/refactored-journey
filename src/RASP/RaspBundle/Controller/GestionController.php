@@ -154,6 +154,29 @@ class GestionController extends Controller {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                if ($this->isGranted('ROLE_ADMIN')){
+                    /* If the user who validate the form is admin, he could have changed UFR or ADMIN
+                     * let check it
+                     */
+                    if ($form->get('super_admin')->getData() == true) {
+                        if ( ! $user->hasRole('ROLE_ADMIN') ) {
+                            /* If user is not admin but we want to change it,
+                             * add admins roles
+                             */
+                            $user->addRole('ROLE_ADMIN');  // for web pages
+                            $user->addRole('ROLE_SUPER_ADMIN');  // for security.yml
+                        }
+                    }
+                    else {
+                        if( $user->hasRole('ROLE_ADMIN') ){
+                            /* If user is admin but we want to change it,
+                             * remove admins roles
+                             */
+                            $user->removeRole('ROLE_ADMIN');
+                            $user->removeRole('ROLE_SUPER_ADMIN');
+                        }
+                    }
+                }
 
                 $user = $form->getData();
 
