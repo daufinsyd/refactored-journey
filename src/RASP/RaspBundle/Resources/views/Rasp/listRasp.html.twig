@@ -10,7 +10,7 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/rasp.css') }}" />
 <div class="container">
-    {% if listRasp[0].ufr %} {# Test whether template is used for listRasp or listOrphanRasp #}
+    {% if listRasp and listRasp[0].ufr %} {# Test whether template is used for listRasp or listOrphanRasp #}
         <h1>Liste des bornes votre UFR</h1>
     {% else %}
         <h1>Liste des bornes orphelines</h1>

@@ -52,7 +52,12 @@ class GestionController extends Controller {
     public function usersAction(){
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser(); // get current user
         $listUser = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->findAll();
-        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
+
+        // Get numbers of Admins
+        $nbOfAdmins = count($this->getDoctrine()->getManager()->getRepository("RASPRaspBundle:User")->findByRoles('ROLE_ADMIN'));
+
+        return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser,
+            'loggedInUser' => $loggedInUser, 'nbOfAdmins' => $nbOfAdmins));
     }
 
 
@@ -75,9 +80,13 @@ class GestionController extends Controller {
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id); // find user in database through Doctrine
 
+        // Get numbers of Admins
+        $nbOfAdmins = count($this->getDoctrine()->getManager()->getRepository("RASPRaspBundle:User")->findByRoles('ROLE_ADMIN'));
+
+
         // if user is granted with super_admin status, then he can access the required page
         if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
-            return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser));
+            return $this->render("RASPRaspBundle:User/Gestion:user.html.twig", array("user" => $user, 'loggedInUser' => $loggedInUser, 'nbOfAdmins' => $nbOfAdmins));
 
         } else {
             throw new AccessDeniedException("Vous n'avez pas les bonnes permissions");
@@ -137,14 +146,39 @@ class GestionController extends Controller {
 
         $loggedInUser = $this->get('security.token_storage')->getToken()->getUser();
         $user = $this->getDoctrine()->getRepository("RASPRaspBundle:User")->find($user_id);
+        $userId = $user->getId();
 
-        if ($user->getId() == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
+        if ($userId == $loggedInUser->getId() || $this->isGranted('ROLE_ADMIN')) {
             $listUfr = $this->getDoctrine()->getRepository("RASPRaspBundle:Ufr")->findAll();
+            $isSuperAdmin = $user->hasRole('ROLE_ADMIN');
 
-            $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr));
+            $form = $this->createForm(UserType::class, $user, array('listUfr' => $listUfr, 'super_admin' => $isSuperAdmin));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                if ($this->isGranted('ROLE_ADMIN')){
+                    /* If the user who validate the form is admin, he could have changed UFR or ADMIN
+                     * let check it
+                     */
+                    if ($form->get('super_admin')->getData() == true) {
+                        if ( ! $user->hasRole('ROLE_ADMIN') ) {
+                            /* If user is not admin but we want to change it,
+                             * add admins roles
+                             */
+                            $user->addRole('ROLE_ADMIN');  // for web pages
+                            $user->addRole('ROLE_SUPER_ADMIN');  // for security.yml
+                        }
+                    }
+                    else {
+                        if( $user->hasRole('ROLE_ADMIN') ){
+                            /* If user is admin but we want to change it,
+                             * remove admins roles
+                             */
+                            $user->removeRole('ROLE_ADMIN');
+                            $user->removeRole('ROLE_SUPER_ADMIN');
+                        }
+                    }
+                }
 
                 $user = $form->getData();
 
@@ -154,8 +188,10 @@ class GestionController extends Controller {
 
                 return $this->redirectToRoute('admin_showUser', array('user_id' => $user_id, 'loggedInUser' => $loggedInUser));
             }
+            $nbOfAdmins = count($this->getDoctrine()->getRepository('RASPRaspBundle:User')->findByRoles('ROLE_ADMIN'));
 
-            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(),
+                'loggedInUser' => $loggedInUser, 'nbOfAdmins' => $nbOfAdmins, 'userId' => $userId));
         }
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
@@ -188,23 +224,34 @@ class GestionController extends Controller {
 
             $user = new User(); // create an user
             $user->setPlainPassword(random_bytes(10)); // with a random password
-            $user->setConfirmationToken('azerty');
+            $user->setConfirmationToken(random_bytes(10));
 
             $form = $this->createForm(UserType::class, $user);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
+
+                if ($form->get('super_admin')->getData() == true){
+                    /* Gant user ADMIN roles if super_admin is checked */
+                    $user->addRole('ROLE_ADMIN');  // for web pages
+                    $user->addRole('ROLE_SUPER_ADMIN');  // for security.yml
+                }
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
 
                 // must send an email here
-                 $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
-                // return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
+                $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
+                return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
             }
-            // Same template as editUser
-            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+
+            $nbOfAdmins = count($this->getDoctrine()->getRepository('RASPRaspBundle:User')->findByRoles('ROLE_ADMIN'));
+            // Same template as editUser, except for userId. userId is set to -1 to allow user creation, it will fail
+            // otherwise.
+            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser,
+                'nbOfAdmins' => $nbOfAdmins, 'userId' => -1));
         }
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
@@ -225,6 +272,9 @@ class GestionController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository("RASPRaspBundle:User")->find($user_id);
 
+        // Get numbers of Admins
+        $nbOfAdmins = count($this->getDoctrine()->getManager()->getRepository("RASPRaspBundle:User")->findByRoles('ROLE_ADMIN'));
+
         if ($this->isGranted('ROLE_ADMIN')) {
             if ($user && !($user->getId() == $loggedInUser->getId())) {
                 $em->remove($user);
@@ -233,7 +283,8 @@ class GestionController extends Controller {
             }
 
             $listUser = $em->getRepository("RASPRaspBundle:User")->findAll();
-            return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser, 'loggedInUser' => $loggedInUser));
+            return $this->render('RASPRaspBundle:User/Gestion:users.html.twig', array("listUser" => $listUser,
+                'loggedInUser' => $loggedInUser, 'nbOfAdmins' => $nbOfAdmins));
 
         } else {
             throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");

@@ -9,7 +9,7 @@ parameters:
     mailer_host: smtp.gmail.com
     mailer_user: simon.vilmin@gmail.com
     mailer_password: PASSWORD
-    #mailer_encryption: ssl
     secret: ThisTokenIsNotSoSecretChangeIt
     database_driver: pdo_sqlite
     database_path: '%kernel.root_dir%/data/db.sqlite'
+    mailer_encryption: ssl
