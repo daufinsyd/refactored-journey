@@ -246,8 +246,12 @@ class GestionController extends Controller {
                 $this->get('fos_user.mailer')->sendConfirmationEmailMessage($user);
                 return $this->redirectToRoute('admin_userSuccess', array('user_id' => $user->getId(), 'loggedInUser' => $loggedInUser));
             }
-            // Same template as editUser
-            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser));
+
+            $nbOfAdmins = count($this->getDoctrine()->getRepository('RASPRaspBundle:User')->findByRoles('ROLE_ADMIN'));
+            // Same template as editUser, except for userId. userId is set to -1 to allow user creation, it will fail
+            // otherwise.
+            return $this->render('RASPRaspBundle:User/Gestion:editUser.html.twig', array('form' => $form->createView(), 'loggedInUser' => $loggedInUser,
+                'nbOfAdmins' => $nbOfAdmins, 'userId' => -1));
         }
         else throw new AccessDeniedException("Vous n'avez pas les bonnes permissions.");
     }
